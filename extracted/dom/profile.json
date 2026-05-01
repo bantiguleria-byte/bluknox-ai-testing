@@ -1,0 +1,46 @@
+{
+  "page": "Profile",
+  "url": "https://staging.bluknox.com/profile",
+  "elements": [
+    {
+      "type": "input",
+      "name": "First Name",
+      "selector": "input#firstName",
+      "placeholder": "First Name"
+    },
+    {
+      "type": "input",
+      "name": "Last Name",
+      "selector": "input#lastName",
+      "placeholder": "Last Name"
+    },
+    {
+      "type": "input",
+      "name": "Email",
+      "selector": "input#email",
+      "placeholder": "Email",
+      "readOnly": true
+    },
+    {
+      "type": "input",
+      "name": "Mobile Number",
+      "selector": "input.ant-input",
+      "placeholder": "Mobile Number"
+    },
+    {
+      "type": "radio",
+      "name": "Gender",
+      "options": ["Male", "Female", "Others"]
+    },
+    {
+      "type": "tab",
+      "name": "Basic Details",
+      "active": true
+    },
+    {
+      "type": "tab",
+      "name": "Address Details",
+      "active": false
+    }
+  ]
+}

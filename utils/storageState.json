@@ -1,0 +1,22 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "https://staging.bluknox.com",
+      "localStorage": [
+        {
+          "name": "Intellix:refresh",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc3ODQ4MTEzOSwiaWF0IjoxNzc3NjE3MTM5LCJqdGkiOiI5YzViYWU5MTQ5Y2U0Zjg1YmQ3MzcyYTIyOGM5MWE4MCIsInVzZXJfaWQiOjEyOX0.AbaZKOHrH9M5uqxcscuyXYn_VkDr5qV4WyxvbOLwd5E"
+        },
+        {
+          "name": "persist:root",
+          "value": "{\"cart\":\"{\\\"items\\\":[],\\\"loading\\\":true,\\\"error\\\":null,\\\"open\\\":false,\\\"total_price\\\":\\\"0.00\\\",\\\"total_quantity\\\":0}\",\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\"}"
+        },
+        {
+          "name": "Intellix:access",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc3NjIwNzM5LCJpYXQiOjE3Nzc2MTcxMzksImp0aSI6IjMwMjFhY2MxNWQxMjQwOTM5ZGMyZjkzOWRhMDAxMmIzIiwidXNlcl9pZCI6MTI5fQ.96lO3HuyUFLuz4IJoWjU3wgosspGqrtm23fcamZwI_Y"
+        }
+      ]
+    }
+  ]
+}

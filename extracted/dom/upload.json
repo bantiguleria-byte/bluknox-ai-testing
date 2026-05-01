@@ -1,0 +1,36 @@
+{
+  "page": "Upload",
+  "url": "https://staging.bluknox.com/upload",
+  "elements": [
+    {
+      "type": "button",
+      "name": "Click to Upload",
+      "selector": "button:has-text('Click to Upload')",
+      "role": "button"
+    },
+    {
+      "type": "table",
+      "name": "Document Table",
+      "selector": "table.ant-table",
+      "columns": ["Name", "Size", "Date", "Actions"]
+    },
+    {
+      "type": "button",
+      "name": "Share",
+      "selector": "svg[data-icon='share-alt']",
+      "role": "img"
+    },
+    {
+      "type": "button",
+      "name": "Download",
+      "selector": "svg[data-icon='download']",
+      "role": "img"
+    },
+    {
+      "type": "button",
+      "name": "Delete",
+      "selector": "svg[data-icon='delete']",
+      "role": "img"
+    }
+  ]
+}

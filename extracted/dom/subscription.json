@@ -1,0 +1,23 @@
+{
+  "page": "Subscription Plans",
+  "url": "https://staging.bluknox.com/subscription",
+  "elements": [
+    {
+      "type": "card",
+      "name": "Personal Plan",
+      "price": "$71.88/year",
+      "button": "SELECT PLAN"
+    },
+    {
+      "type": "card",
+      "name": "Business Plan",
+      "price": "$167.88/year",
+      "button": "SELECT PLAN"
+    },
+    {
+      "type": "checkbox",
+      "name": "Additional Encrypted Storage - 15GB",
+      "price": "$4.00/mo"
+    }
+  ]
+}

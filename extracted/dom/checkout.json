@@ -1,0 +1,21 @@
+{
+  "page": "Stripe Checkout",
+  "url": "https://checkout.stripe.com/...",
+  "elements": [
+    {
+      "type": "input",
+      "name": "Email",
+      "selector": "input#email"
+    },
+    {
+      "type": "button",
+      "name": "Subscribe",
+      "selector": "button.SubmitButton"
+    },
+    {
+      "type": "link",
+      "name": "Pay without Link",
+      "selector": "a.LinkSelection-link"
+    }
+  ]
+}

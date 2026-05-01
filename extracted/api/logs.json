@@ -1,0 +1,17 @@
+[
+  {
+    "endpoint": "/api/login",
+    "method": "POST",
+    "description": "User authentication request"
+  },
+  {
+    "endpoint": "/api/documents",
+    "method": "GET",
+    "description": "Fetch list of uploaded documents"
+  },
+  {
+    "endpoint": "/api/profile",
+    "method": "GET",
+    "description": "Fetch user profile details"
+  }
+]
