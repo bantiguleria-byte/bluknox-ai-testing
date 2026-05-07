@@ -14,3 +14,5 @@ Responsible for analyzing requirements and planning the automation strategy for 
 2. Determine which existing Page Objects can be reused or if new ones are needed.
 3. Define the test data requirements.
 4. Hand over the plan to the Test Author.
+
+
