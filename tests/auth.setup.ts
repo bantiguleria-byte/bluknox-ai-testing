@@ -9,9 +9,18 @@ setup('authenticate', async ({ page }) => {
   // Navigate and login
   await loginPage.login('banti.guleria@idsil.com', 'Test@12345');
   
-  // Wait for a reliable logged-in indicator (e.g. shopping cart or dashboard element)
-  // Based on exploration, shopping-cart image is a good indicator
-  await page.getByRole('img', { name: 'shopping-cart' }).waitFor({ state: 'visible', timeout: 60000 });
+  // Wait for navigation away from login page
+  await expect(page).not.toHaveURL(/.*\/login/, { timeout: 30000 });
+  
+  // Wait for a reliable logged-in indicator
+  // Based on exploration, the shopping-cart icon is only present when logged in
+  const cartIcon = page.getByLabel('shopping-cart');
+  await expect(cartIcon).toBeVisible({ timeout: 60000 });
+  
+  // Verify profile icon is also present as a secondary check
+  const profileIcon = page.locator('header').getByRole('img').last();
+  await expect(profileIcon).toBeVisible();
   
   await page.context().storageState({ path: authFile });
 });
+

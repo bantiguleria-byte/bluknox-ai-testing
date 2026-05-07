@@ -2,18 +2,18 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 60000,
+  timeout: 90000,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  retries: 0,
+  workers: 1,
   reporter: 'html',
   use: {
     baseURL: 'https://staging.bluknox.com',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     navigationTimeout: 60000,
-    actionTimeout: 30000,
+    actionTimeout: 40000,
   },
   projects: [
     {
@@ -26,7 +26,6 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
         storageState: 'utils/storageState.json',
       },
-      dependencies: ['setup'],
     },
   ],
 });

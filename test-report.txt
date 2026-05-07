@@ -1,0 +1,34 @@
+
+Running 28 tests using 1 worker
+
+[1A[2K[1/28] [setup] › tests\auth.setup.ts:6:6 › authenticate
+Terminate batch job (Y/N)? [1A[2K  1) [setup] › tests\auth.setup.ts:6:6 › authenticate ──────────────────────────────────────────────
+
+    Error: page.goto: Target page, context or browser has been closed
+    Call log:
+    [2m  - navigating to "https://staging.bluknox.com/login", waiting until "domcontentloaded"[22m
+
+
+       at ..\pages\BasePage.ts:12
+
+      10 |     async navigateTo(url: string, waitUntil: 'load' | 'domcontentloaded' | 'networkidle' | 'commit' = 'domcontentloaded') {
+      11 |         try {
+    > 12 |             await this.page.goto(url, { waitUntil });
+         |                             ^
+      13 |         } catch (error: unknown) {
+      14 |             // Retry once for transient network errors
+      15 |             const message = error instanceof Error ? error.message : String(error);
+        at LoginPage.navigateTo (E:\Bluknox-AI-Testing\pages\BasePage.ts:12:29)
+        at LoginPage.goToLogin (E:\Bluknox-AI-Testing\pages\LoginPage.ts:17:20)
+        at LoginPage.login (E:\Bluknox-AI-Testing\pages\LoginPage.ts:21:20)
+        at E:\Bluknox-AI-Testing\tests\auth.setup.ts:10:19
+
+    Error: browserContext.close: Target page, context or browser has been closed
+
+    Error Context: test-results\auth.setup.ts-authenticate-setup\error-context.md
+
+
+[1A[2K  1 failed
+    [setup] › tests\auth.setup.ts:6:6 › authenticate ───────────────────────────────────────────────
+  27 did not run
+

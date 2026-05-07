@@ -18,7 +18,7 @@ export class UploadPage extends BasePage {
     }
 
     async goTo() {
-        await this.navigateTo('https://staging.bluknox.com/upload');
+        await this.navigateTo('/upload');
     }
 
     async uploadFile(filePath: string) {
@@ -59,13 +59,21 @@ export class UploadPage extends BasePage {
         const row = await this.getDocumentRow(name);
         const deleteBtn = row.getByRole('button', { name: 'delete' });
         await deleteBtn.click();
-        // Assuming a confirmation modal appears
-        await this.page.getByRole('button', { name: 'OK' }).click();
+        
+        // Handle confirmation modal
+        const okButton = this.page.getByRole('button', { name: 'OK' });
+        await okButton.waitFor({ state: 'visible', timeout: 5000 });
+        await okButton.click();
+
+        // Wait for success toast notification
+        await this.page.getByText(/deleted successfully/i).waitFor({ state: 'visible', timeout: 10000 });
     }
 
     async shareDocument(name: string) {
         const row = await this.getDocumentRow(name);
-        const shareBtn = row.getByRole('button', { name: 'share-alt' });
+        // Find the share button by its icon's aria-label
+        const shareBtn = row.locator('button').filter({ has: this.page.locator('span[aria-label="share-alt"]') });
+        await shareBtn.waitFor({ state: 'visible', timeout: 15000 });
         await shareBtn.click();
     }
 }

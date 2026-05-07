@@ -1,103 +1,90 @@
 # BluKnox Application Flow Documentation
 
-This document outlines the structure and key interaction points of the BluKnox staging application, explored on 2026-04-30.
+## 1. Overview
+BluKnox is a document management and subscription-based platform. This document outlines the core modules, navigation paths, and UI components discovered during the guided exploration.
 
-## Overview
-BluKnox is a cloud-based document management system. The primary flow involves logging in, uploading documents, managing profile settings, and viewing notifications.
+---
 
-## Modules
+## 2. Core Modules
 
-### 1. Login
+### 2.1 Authentication
 - **URL**: `https://staging.bluknox.com/login`
-- **Key Elements**:
-    - Email/Username input
-    - Password input
-    - "Sign in" button
-    - "Forgot password?" link
-    - "Don't have an account? Sign Up" link
+- **Fields**:
+  - Email: `input#login_email`
+  - Password: `input#login_password`
+- **Actions**:
+  - Sign in: `button:has-text('Sign in')`
+- **Flow**: User enters credentials and is redirected to the Dashboard.
 
-### 2. Upload / Dashboard
+### 2.2 Dashboard
+- **URL**: `https://staging.bluknox.com/`
+- **Key Elements**:
+  - **View Subscription Plans**: `button:has-text('View Subscription Plans')` - Primary CTA for upsell.
+  - **Profile Avatar**: `span.ant-avatar` - Top-right dropdown trigger.
+  - **Navigation Sidebar**: Contains links to Dashboard, Upload, and Settings.
+
+### 2.3 Upload Module
 - **URL**: `https://staging.bluknox.com/upload`
-- **Purpose**: Main workspace for document management.
 - **Key Elements**:
-    - **Upload Area**: Drag & drop zone or "Click to Upload" button.
-    - **Document Table**: List of uploaded files with the following columns:
-        - Name
-        - Size
-        - Upload Date
-    - **Actions**:
-        - Share (Icon)
-        - Download (Icon)
-        - Delete (Icon)
-- **Visuals**: ![Upload Module](file:///e:/Bluknox-AI-Testing/extracted/screenshots/upload.png)
+  - **Upload Button**: `button:has-text('Click to Upload')` - Triggers file chooser.
+  - **Document Table**: `.ant-table` - Displays Name, Size, Uploaded At, and Actions.
+  - **Row Actions**: Share, Download, Delete icons.
 
-### 3. User Profile
-- **URL**: `https://staging.bluknox.com/profile`
-- **Purpose**: Manage personal information and account settings.
+### 2.4 Subscription Plans
+- **URL**: `https://staging.bluknox.com/product/ODQ=`
+- **Plan Tiers**:
+  - **Business Plan**: $13.99/mo (Introductory Price).
+  - **Personal Plan**: $5.99/mo.
 - **Key Elements**:
-    - **Tabs**: Basic Details, Address Details.
-    - **Form Fields**:
-        - First Name (Input)
-        - Last Name (Input)
-        - Email (Read-only/Input)
-        - Mobile Number (Input with country code)
-        - Gender (Radio buttons: Male, Female, Others)
-    - **Side Menu**:
-        - Profile
-        - Order History
-        - Billing
-        - Change Password
-        - FAQ
-        - Training Material
-        - Customer Service
-        - Logout
-- **Visuals**: ![Profile Module](file:///e:/Bluknox-AI-Testing/extracted/screenshots/profile.png)
+  - **Plan Cards**: `.ant-card` components.
+  - **Select Button**: `button:has-text('SELECT PLAN')`.
+  - **Order Summary**: Side drawer (`.ant-drawer`) that opens upon selection.
 
-### 4. Shopping Cart
-- **URL**: `https://staging.bluknox.com/cart` (accessed via Cart icon)
-- **Purpose**: Manage subscriptions or purchases.
-- **Key Elements**:
-    - Cart items list.
-    - Total amount.
-    - Checkout button.
-- **Visuals**: ![Cart Module](file:///e:/Bluknox-AI-Testing/extracted/screenshots/cart.png)
+### 2.5 Profile & Settings
+- **Access**: Click Profile Avatar -> "View Profile".
+- **Tabs**:
+  - Basic Details (First Name, Last Name, Email, Mobile).
+  - Address Details.
+- **Actions**: Logout.
 
-### 5. Notifications
-- **Purpose**: View system alerts and updates.
-- **Key Elements**:
-    - Notification list (Pop-over from Bell icon).
-- **Visuals**: ![Notifications Module](file:///e:/Bluknox-AI-Testing/extracted/screenshots/notifications.png)
+---
 
-### 6. Subscription Plans
-- **URL**: `https://staging.bluknox.com/subscription` (accessed via "View Subscription Plans")
-- **Purpose**: Select a service plan and add-ons.
-- **Key Elements**:
-    - **Plans**: Business Plan, Personal Plan.
-    - **Add-ons**: Extra storage, secure collaboration, mobile device support, etc.
-    - **Actions**: "SELECT PLAN" button for each plan.
-- **Visuals**: ![Subscription Plans](file:///e:/Bluknox-AI-Testing/extracted/screenshots/subscription_plans.png)
+## 3. UI Component Patterns (Ant Design)
+The application heavily utilizes Ant Design components:
+- **Buttons**: Often have classes like `ant-btn-primary`.
+- **Modals**: Used for confirmations (e.g., Delete, Checkout Disclaimer).
+- **Drawers**: Used for the Order Summary and Checkout flow.
+- **Checkboxes**: Standard `ant-checkbox` used in Add-on selection.
 
-### 7. Checkout & Payment (Stripe)
-- **Flow**:
-    1. Select Plan -> Opens **Order Summary Sidebar** (AntD Drawer).
-    2. Click **Checkout** -> Opens **Disclaimer Modal**.
-    3. Click **Proceed** -> Redirects to **Stripe hosted checkout**.
-- **Stripe Checkout Page**:
-    - **Elements**: Order summary, Email field, Payment method (Credit Card/Link), Subscribe button.
-- **Visuals**: ![Stripe Checkout](file:///e:/Bluknox-AI-Testing/extracted/screenshots/stripe_checkout.png)
+---
 
-### 8. Order History
-- **URL**: `https://staging.bluknox.com/orders` (Redirected after successful payment)
-- **Purpose**: View past purchases, active subscriptions, and product keys.
-- **Key Elements**:
-    - **Order Cards**: Shows Plan Name, Purchase Date, Expiry Date.
-    - **Actions**: "Show Product Key" link.
-- **Visuals**: ![Order History Success](/e:/Bluknox-AI-Testing/extracted/screenshots/payment_success.png)
+## 4. Subscription Purchase Flow (E2E)
+Detailed path for a successful subscription:
+1. **Plan Selection**: User clicks `SELECT PLAN` on a card.
+2. **Order Summary**: Drawer opens on the right.
+3. **Checkout**: User clicks `Checkout` button in the drawer.
+4. **Disclaimer**: A modal appears; user must click `Proceed`.
+5. **Stripe Redirection**: Redirects to `checkout.stripe.com`.
+6. **Payment**:
+   - Card Number: `#cardNumber`
+   - Expiry/CVC: `#cardExpiry`, `#cardCvc`
+   - Submit: `button.SubmitButton`
+7. **Success**: Redirects back to `/orders` (Order History).
 
-## Navigation Menu (Header)
-- **About Us**
-- **Contact Us**
-- **Shopping Cart Icon**
-- **Cloud Upload Icon** (Active for /upload)
-- **Notifications Icon** (Bell)
-- **User Profile Icon** (Avatar)
+---
+
+## 5. Discovered API Endpoints
+- `POST /api/v1/auth/login`: Authentication.
+- `GET /api/v1/product/list`: Fetching subscription plans.
+- `POST /api/v1/document/upload`: File upload endpoint.
+- `GET /api/v1/user/profile`: Fetching user details.
+- `GET /api/v1/order/history`: Fetching successful subscriptions.
+
+---
+
+## 6. Navigation Paths
+- **Login** -> **Dashboard**
+- **Dashboard** -> **Upload** (via sidebar)
+- **Dashboard** -> **Plans** (via "View Subscription Plans" button)
+- **Plans** -> **Order History** (via successful Stripe checkout)
+- **Profile Avatar** -> **Logout** -> **Login**

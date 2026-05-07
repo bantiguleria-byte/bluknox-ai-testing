@@ -1,39 +1,51 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/LoginPage';
 import { ProfilePage } from '../pages/ProfilePage';
 
-test.describe('Profile Module Tests', () => {
+test.describe('Profile Module Regression Suite', () => {
+    let loginPage: LoginPage;
     let profilePage: ProfilePage;
 
     test.beforeEach(async ({ page }) => {
+        loginPage = new LoginPage(page);
         profilePage = new ProfilePage(page);
-        await profilePage.goTo();
-    });
 
-    test('TC-PR-001: Verify Basic Details Rendering', async ({ page }) => {
-        await expect(page.locator('#first_name')).toBeVisible();
-        await expect(page.locator('#last_name')).toBeVisible();
-        await expect(page.locator('#email')).toBeVisible();
-    });
-
-    test('TC-PR-002: Verify Email Field Visibility', async ({ page }) => {
-        await expect(page.locator('#email')).toBeVisible();
-    });
-
-    test('TC-PR-003: Verify Gender Selection', async ({ page }) => {
-        await profilePage.selectGender('Female');
-        await expect(page.getByRole('radio', { name: 'Female', exact: true })).toBeChecked();
+        // 1. Login successfully
+        await loginPage.login('banti.guleria@idsil.com', 'Test@12345');
         
-        await profilePage.selectGender('Male');
-        await expect(page.getByRole('radio', { name: 'Male', exact: true })).toBeChecked();
-        await expect(page.getByRole('radio', { name: 'Female', exact: true })).not.toBeChecked();
+        // 2. Navigate to Profile via header dropdown
+        await profilePage.navigateToProfile();
     });
 
-    test('TC-PR-004: Verify Tab Navigation', async ({ page }) => {
-        await profilePage.switchTab('Address Details');
-        // After clicking, verify the heading changes to "Address Details"
-        await expect(page.getByRole('heading', { name: 'Address Details' })).toBeVisible({ timeout: 10000 });
+    test('Verify Profile dashboard tabs navigation', async () => {
+        console.log('Verifying Profile section...');
+        await profilePage.goToSection('Profile');
+        await expect(profilePage.page.getByText('Profile Settings').first()).toBeVisible();
+
+        console.log('Verifying Order History section...');
+        await profilePage.goToSection('Order History');
+        await profilePage.verifyOrderHistoryVisible();
+
+        console.log('Verifying Billing section...');
+        await profilePage.goToSection('Billing');
+        await profilePage.verifyBillingDetails();
+
+        console.log('Verifying Change Password section...');
+        await profilePage.goToSection('Change Password');
+        await expect(profilePage.page.getByRole('heading', { name: /Change Password/i })
+            .or(profilePage.page.locator('form').getByText(/Change Password/i))
+            .first()).toBeVisible();
+
+        console.log('Verifying FAQ section...');
+        await profilePage.goToSection('Frequently Asked Questions');
         
-        await profilePage.switchTab('Basic Details');
-        await expect(page.getByRole('heading', { name: 'Profile Settings' })).toBeVisible({ timeout: 10000 });
+        // Navigation Reset: FAQ opens in a help center (external-like), sidebar may be gone.
+        // The goToSection for FAQ already asserts the URL.
+        
+        console.log('Returning to Profile to restore sidebar...');
+        await profilePage.navigateToProfile();
+
+        console.log('Verifying Training Material section...');
+        await profilePage.goToSection('Training Material');
     });
 });

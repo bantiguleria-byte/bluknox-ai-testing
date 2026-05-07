@@ -1,0 +1,857 @@
+Terminate batch job (Y/N)? {
+  "config": {
+    "configFile": "E:\\Bluknox-AI-Testing\\playwright.config.ts",
+    "rootDir": "E:/Bluknox-AI-Testing/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "E:/Bluknox-AI-Testing/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "setup",
+        "name": "setup",
+        "testDir": "E:/Bluknox-AI-Testing/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/.*\\.setup\\.ts/"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "E:/Bluknox-AI-Testing/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "E:/Bluknox-AI-Testing/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "auth.setup.ts",
+      "file": "auth.setup.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "authenticate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup",
+              "projectName": "setup",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "interrupted",
+                  "duration": 34932,
+                  "error": {
+                    "message": "Error: locator.waitFor: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('.ant-dropdown-trigger').or(locator('.ant-avatar')).or(getByRole('button', { name: /cloud-upload|bell/i })).first() to be visible\u001b[22m\n",
+                    "stack": "Error: locator.waitFor: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('.ant-dropdown-trigger').or(locator('.ant-avatar')).or(getByRole('button', { name: /cloud-upload|bell/i })).first() to be visible\u001b[22m\n\n    at LoginPage.login (E:\\Bluknox-AI-Testing\\pages\\LoginPage.ts:40:42)\n    at E:\\Bluknox-AI-Testing\\tests\\auth.setup.ts:10:3",
+                    "location": {
+                      "file": "E:\\Bluknox-AI-Testing\\pages\\LoginPage.ts",
+                      "column": 42,
+                      "line": 40
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39m..\\pages\\LoginPage.ts:40\n\n\u001b[0m \u001b[90m 38 |\u001b[39m         \u001b[90m// Wait for profile icon to confirm successful login and session establishment\u001b[39m\n \u001b[90m 39 |\u001b[39m         \u001b[90m// Increased timeout to 90s to handle extreme environmental lag\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 40 |\u001b[39m         \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mauthenticatedHeader()\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m90000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 41 |\u001b[39m     }\n \u001b[90m 42 |\u001b[39m\n \u001b[90m 43 |\u001b[39m     \u001b[36mprivate\u001b[39m authenticatedHeader()\u001b[33m:\u001b[39m \u001b[33mLocator\u001b[39m {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "E:\\Bluknox-AI-Testing\\pages\\LoginPage.ts",
+                        "column": 42,
+                        "line": 40
+                      },
+                      "message": "Error: locator.waitFor: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('.ant-dropdown-trigger').or(locator('.ant-avatar')).or(getByRole('button', { name: /cloud-upload|bell/i })).first() to be visible\u001b[22m\n\n\n   at ..\\pages\\LoginPage.ts:40\n\n  38 |         // Wait for profile icon to confirm successful login and session establishment\n  39 |         // Increased timeout to 90s to handle extreme environmental lag\n> 40 |         await this.authenticatedHeader().waitFor({ state: 'visible', timeout: 90000 });\n     |                                          ^\n  41 |     }\n  42 |\n  43 |     private authenticatedHeader(): Locator {\n    at LoginPage.login (E:\\Bluknox-AI-Testing\\pages\\LoginPage.ts:40:42)\n    at E:\\Bluknox-AI-Testing\\tests\\auth.setup.ts:10:3"
+                    },
+                    {
+                      "message": "Error: browserContext.close: Target page, context or browser has been closed"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-05-07T11:08:23.405Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "E:\\Bluknox-AI-Testing\\test-results\\auth.setup.ts-authenticate-setup\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "E:\\Bluknox-AI-Testing\\pages\\LoginPage.ts",
+                    "column": 42,
+                    "line": 40
+                  }
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "17e3fe6f4d9d8bd79c6b-60f085b113a677673906",
+          "file": "auth.setup.ts",
+          "line": 6,
+          "column": 6
+        }
+      ]
+    },
+    {
+      "title": "checkout-negative.spec.ts",
+      "file": "checkout-negative.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Stripe Checkout Negative Testing",
+          "file": "checkout-negative.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-NEG-CHK-001: Verify error for invalid card number",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5f21fc161686611724b9-84f208c79785b418c055",
+              "file": "checkout-negative.spec.ts",
+              "line": 23,
+              "column": 9
+            },
+            {
+              "title": "TC-NEG-CHK-002: Verify error for expired card date",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5f21fc161686611724b9-e7cdf1cd9599740281a3",
+              "file": "checkout-negative.spec.ts",
+              "line": 38,
+              "column": 9
+            },
+            {
+              "title": "TC-NEG-CHK-003: Verify error for incorrect CVC",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5f21fc161686611724b9-9ece9d917c9bee489200",
+              "file": "checkout-negative.spec.ts",
+              "line": 53,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e-subscription.spec.ts",
+      "file": "e2e-subscription.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Extended E2E Subscription Flow",
+          "file": "e2e-subscription.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Full End-to-End Subscription Lifecycle",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "8cb84e5095ae318cf695-15b1129ee7db36caf428",
+              "file": "e2e-subscription.spec.ts",
+              "line": 20,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "order-summary.spec.ts",
+      "file": "order-summary.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Order Summary Regression Suite",
+          "file": "order-summary.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-REG-ORDER-001: Verify successful login, cart clearing, and logout",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3b64bf70e0e79e5df78f-7e3dd15f5e1df90c2e58",
+              "file": "order-summary.spec.ts",
+              "line": 14,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "profile-negative.spec.ts",
+      "file": "profile-negative.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Profile Module Negative Validation Suite",
+          "file": "profile-negative.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-PROF-NEG-001: Change Password - New password and Confirm password mismatch",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ef0e99d0eb5f0d0a47e4-b2a072848999b161052f",
+              "file": "profile-negative.spec.ts",
+              "line": 17,
+              "column": 9
+            },
+            {
+              "title": "TC-PROF-NEG-002: Verify mandatory fields validation (Empty First Name)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ef0e99d0eb5f0d0a47e4-fe1f8eb1eb23b207a12b",
+              "file": "profile-negative.spec.ts",
+              "line": 23,
+              "column": 9
+            },
+            {
+              "title": "TC-PROF-NEG-003: Change Password - Incorrect Old Password",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ef0e99d0eb5f0d0a47e4-31eeaed6ae81a6a72c9b",
+              "file": "profile-negative.spec.ts",
+              "line": 29,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "profile-regression.spec.ts",
+      "file": "profile-regression.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Profile Module Regression Suite",
+          "file": "profile-regression.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-PROF-001: Verify Basic Profile details are displayed correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1f939bf1b3c8b02f5540-52bd770f0d438f62e1b1",
+              "file": "profile-regression.spec.ts",
+              "line": 20,
+              "column": 9
+            },
+            {
+              "title": "TC-PROF-002: Verify Order History section displays records",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1f939bf1b3c8b02f5540-dfc4999131c9a9b42a5f",
+              "file": "profile-regression.spec.ts",
+              "line": 28,
+              "column": 9
+            },
+            {
+              "title": "TC-PROF-003: Verify Billing section displays subscription information",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1f939bf1b3c8b02f5540-84957c2af68e79a48c23",
+              "file": "profile-regression.spec.ts",
+              "line": 33,
+              "column": 9
+            },
+            {
+              "title": "TC-PROF-004: Verify Change Password fields are accessible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1f939bf1b3c8b02f5540-e970f62797510ef79158",
+              "file": "profile-regression.spec.ts",
+              "line": 38,
+              "column": 9
+            },
+            {
+              "title": "TC-PROF-005: Verify external support links are reachable",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1f939bf1b3c8b02f5540-147fda94a6deccfc827f",
+              "file": "profile-regression.spec.ts",
+              "line": 43,
+              "column": 9
+            },
+            {
+              "title": "TC-PROF-006: Verify Customer Service contact form is present",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1f939bf1b3c8b02f5540-a4ba40a403394e0dc21c",
+              "file": "profile-regression.spec.ts",
+              "line": 51,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "profile.spec.ts",
+      "file": "profile.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Profile Module Regression Suite",
+          "file": "profile.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Verify Profile dashboard tabs navigation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-44a72d35b3adbd9c28be",
+              "file": "profile.spec.ts",
+              "line": 20,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "scratch-inspect.spec.ts",
+      "file": "scratch-inspect.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Technical Audit: Profile Module DOM and Validation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "8e87ed0bedae895439fb-9a75c5a976915852451e",
+          "file": "scratch-inspect.spec.ts",
+          "line": 4,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "subscription-regression.spec.ts",
+      "file": "subscription-regression.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Subscription Navigation Regression",
+          "file": "subscription-regression.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-SUB-001: Verify Successful Navigation to Stripe Checkout (Personal Plan)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "2638cf10b2e061ac1141-6fef2f821a6834f8d052",
+              "file": "subscription-regression.spec.ts",
+              "line": 23,
+              "column": 9
+            },
+            {
+              "title": "TC-SUB-002: Verify Successful Navigation to Stripe Checkout (Business Plan)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "2638cf10b2e061ac1141-811c74e2e08a7d1f9281",
+              "file": "subscription-regression.spec.ts",
+              "line": 39,
+              "column": 9
+            },
+            {
+              "title": "TC-SUB-003: Verify Add-on Selection & Price Calculation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "2638cf10b2e061ac1141-a3c97244b153ab4054b3",
+              "file": "subscription-regression.spec.ts",
+              "line": 54,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "subscription.spec.ts",
+      "file": "subscription.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Subscription & Checkout Tests",
+          "file": "subscription.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-SUB-001: Verify Subscription Plan Selection",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7d953d1cdb8684155dd7-e9cfe9ef334002e450fd",
+              "file": "subscription.spec.ts",
+              "line": 15,
+              "column": 9
+            },
+            {
+              "title": "TC-SUB-002: Verify Add-on Selection",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7d953d1cdb8684155dd7-600e26cb62b9f1c09592",
+              "file": "subscription.spec.ts",
+              "line": 21,
+              "column": 9
+            },
+            {
+              "title": "TC-CH-001 & TC-CH-002: Verify Stripe Checkout Flow",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7d953d1cdb8684155dd7-413aa385c10eb7b0ca85",
+              "file": "subscription.spec.ts",
+              "line": 37,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "upload.spec.ts",
+      "file": "upload.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Upload Module Tests",
+          "file": "upload.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-UP-001: Verify Document Upload Functionality",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "64f97298e5aac3754605-961363a80fb3dc360467",
+              "file": "upload.spec.ts",
+              "line": 15,
+              "column": 9
+            },
+            {
+              "title": "TC-UP-002: Verify Document Table Columns",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "64f97298e5aac3754605-cbf6d1ef4c55046834c8",
+              "file": "upload.spec.ts",
+              "line": 23,
+              "column": 9
+            },
+            {
+              "title": "TC-UP-003: Verify Document Download",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "64f97298e5aac3754605-b716f3c463bcf235d24b",
+              "file": "upload.spec.ts",
+              "line": 28,
+              "column": 9
+            },
+            {
+              "title": "TC-UP-004: Verify Document Sharing",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "64f97298e5aac3754605-214f7c025ab11c7e84b7",
+              "file": "upload.spec.ts",
+              "line": 33,
+              "column": 9
+            },
+            {
+              "title": "TC-UP-005: Verify Document Deletion",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "64f97298e5aac3754605-a7e9d2232ef70635c130",
+              "file": "upload.spec.ts",
+              "line": 50,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-07T11:08:21.886Z",
+    "duration": 36862.651,
+    "expected": 0,
+    "skipped": 28,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
+
