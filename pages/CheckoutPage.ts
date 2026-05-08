@@ -44,15 +44,44 @@ export class CheckoutPage extends BasePage {
     async fillCardDetails(cardNumber: string, expiry: string, cvc: string) {
         await this.handleStripeLinkChallenge('000000');
 
-        const cardNumberInput = await this.firstVisibleLocator(this.cardNumberLocators(), 'Stripe card number input', 120000);
-        const expiryInput = await this.firstVisibleLocator(this.cardExpiryLocators(), 'Stripe expiry input', 30000);
-        const cvcInput = await this.firstVisibleLocator(this.cardCvcLocators(), 'Stripe CVC input', 30000);
+        const cardInputSelector = '#cardNumber, #Field-numberInput, input[name="cardnumber"], input[autocomplete="cc-number"]';
+        const expiryInputSelector = '#cardExpiry, #Field-expiryInput, input[name="exp-date"], input[name="cardExpiry"], input[autocomplete="cc-exp"]';
+        const cvcInputSelector = '#cardCvc, #Field-cvcInput, input[name="cvc"], input[name="cardCvc"], input[autocomplete="cc-csc"]';
+        const postalInputSelector = '#billingPostalCode, #Field-postalCodeInput, input[name="postal"], input[name="postalCode"], input[autocomplete="postal-code"]';
+
+        const cardFrameLocators = await this.stripeFrameInputLocatorsFromLiveFrames(cardInputSelector);
+        const expiryFrameLocators = await this.stripeFrameInputLocatorsFromLiveFrames(expiryInputSelector);
+        const cvcFrameLocators = await this.stripeFrameInputLocatorsFromLiveFrames(cvcInputSelector);
+        const postalFrameLocators = await this.stripeFrameInputLocatorsFromLiveFrames(postalInputSelector);
+
+        const cardNumberInput = await this.firstVisibleLocator([
+            this.page.getByRole('textbox', { name: /card number/i }).first(),
+            this.page.getByPlaceholder(/1234 1234/i).first(),
+            this.page.locator(cardInputSelector).first(),
+            ...cardFrameLocators,
+        ], 'Stripe card number input', 120000);
+
+        const expiryInput = await this.firstVisibleLocator([
+            this.page.getByRole('textbox', { name: /expiration|expiry/i }).first(),
+            this.page.getByPlaceholder(/MM\s*\/\s*YY/i).first(),
+            this.page.locator(expiryInputSelector).first(),
+            ...expiryFrameLocators,
+        ], 'Stripe expiry input', 30000);
+
+        const cvcInput = await this.firstVisibleLocator([
+            this.page.getByRole('textbox', { name: /cvc|security code/i }).first(),
+            this.page.locator(cvcInputSelector).first(),
+            ...cvcFrameLocators,
+        ], 'Stripe CVC input', 30000);
 
         await cardNumberInput.fill(cardNumber);
         await expiryInput.fill(expiry);
         await cvcInput.fill(cvc);
 
-        const postalInput = await this.firstVisibleLocator(this.postalCodeLocators(), 'Stripe postal code input', 3000).catch(() => null);
+        const postalInput = await this.firstVisibleLocator([
+            this.page.locator(postalInputSelector).first(),
+            ...postalFrameLocators,
+        ], 'Stripe postal code input', 3000).catch(() => null);
         if (postalInput) {
             await postalInput.fill('110001');
         }
@@ -104,8 +133,6 @@ export class CheckoutPage extends BasePage {
             this.page.getByRole('textbox', { name: /card number/i }).first(),
             this.page.getByPlaceholder(/1234 1234/i).first(),
             this.page.locator(selector).first(),
-            ...this.stripeFrameInputLocators(selector, 'iframe[title*="card number" i], iframe[name*="cardNumber" i]'),
-            ...this.stripeFrameInputLocators(selector)
         ];
     }
 
@@ -115,8 +142,6 @@ export class CheckoutPage extends BasePage {
             this.page.getByRole('textbox', { name: /expiration|expiry/i }).first(),
             this.page.getByPlaceholder(/MM\s*\/\s*YY/i).first(),
             this.page.locator(selector).first(),
-            ...this.stripeFrameInputLocators(selector, 'iframe[title*="expiration" i], iframe[title*="expiry" i], iframe[name*="cardExpiry" i]'),
-            ...this.stripeFrameInputLocators(selector)
         ];
     }
 
@@ -125,8 +150,6 @@ export class CheckoutPage extends BasePage {
         return [
             this.page.getByRole('textbox', { name: /cvc|security code/i }).first(),
             this.page.locator(selector).first(),
-            ...this.stripeFrameInputLocators(selector, 'iframe[title*="cvc" i], iframe[title*="security" i], iframe[name*="cardCvc" i]'),
-            ...this.stripeFrameInputLocators(selector)
         ];
     }
 
@@ -134,28 +157,45 @@ export class CheckoutPage extends BasePage {
         const selector = '#billingPostalCode, #Field-postalCodeInput, input[name="postal"], input[name="postalCode"], input[autocomplete="postal-code"]';
         return [
             this.page.locator(selector).first(),
-            ...this.stripeFrameInputLocators(selector, 'iframe[title*="postal" i], iframe[name*="postal" i]'),
-            ...this.stripeFrameInputLocators(selector)
         ];
     }
 
-    private stripeFrameInputLocators(inputSelector: string, frameSelector = this.stripeFrameSelector): Locator[] {
-        return Array.from({ length: 6 }, (_, index) =>
-            this.page.frameLocator(frameSelector).nth(index).locator(inputSelector).first()
-        );
+    /**
+     * Dynamically scans all available Stripe iframes (by actual count) and returns
+     * a flat list of Locators for the given inputSelector found inside each frame.
+     * This avoids the brittle nth(N) hardcoding that crashes when fewer iframes exist.
+     */
+    private async stripeFrameInputLocatorsFromLiveFrames(inputSelector: string): Promise<Locator[]> {
+        const allIframes = this.page.locator(this.stripeFrameSelector);
+        const count = await allIframes.count();
+        const locators: Locator[] = [];
+        for (let i = 0; i < count; i++) {
+            locators.push(
+                this.page.frameLocator(this.stripeFrameSelector).nth(i).locator(inputSelector).first()
+            );
+        }
+        return locators;
     }
 
-    private stripeFramePayWithoutLinkLocators(): Locator[] {
-        return Array.from({ length: 6 }, (_, index) => {
-            const stripeFrame = this.page.frameLocator(this.stripeFrameSelector).nth(index);
-            return stripeFrame.getByRole('button', { name: /pay without link/i })
-                .or(stripeFrame.getByText(/pay without link/i))
-                .first();
-        });
+    private async stripeFramePayWithoutLinkLocators(): Promise<Locator[]> {
+        const allIframes = this.page.locator(this.stripeFrameSelector);
+        const count = await allIframes.count();
+        const locators: Locator[] = [];
+        for (let i = 0; i < count; i++) {
+            const stripeFrame = this.page.frameLocator(this.stripeFrameSelector).nth(i);
+            locators.push(
+                stripeFrame.getByRole('button', { name: /pay without link/i })
+                    .or(stripeFrame.getByText(/pay without link/i))
+                    .first()
+            );
+        }
+        return locators;
     }
 
     private async fillEmptyCardDetailsIfNeeded() {
-        const cardNumberInput = await this.firstVisibleLocator(this.cardNumberLocators(), 'Stripe card number input', 5000).catch(() => null);
+        const cardNumberInput = await this.firstVisibleLocator(
+            await this.buildCardNumberLocators(), 'Stripe card number input', 5000
+        ).catch(() => null);
         if (!cardNumberInput) {
             return;
         }
@@ -176,33 +216,50 @@ export class CheckoutPage extends BasePage {
     }
 
     private async handleStripeLinkChallenge(otp: string) {
+        // Wait for skeleton/loading to disappear first
         const skeleton = this.page.locator('.Skeleton, .loading, .spinner').first();
         if (await skeleton.isVisible().catch(() => false)) {
             await skeleton.waitFor({ state: 'hidden', timeout: 30000 }).catch(() => {});
         }
 
+        // --- Strategy 1: Click "Pay without Link" if visible (preferred — bypasses Link entirely) ---
+        // Give it up to 15s since Stripe can be slow to render the Link challenge screen.
+        const frameLocators = await this.stripeFramePayWithoutLinkLocators();
         const payWithoutLink = await this.firstVisibleLocator([
             this.page.getByRole('button', { name: /pay without link/i }).first(),
             this.page.getByText(/pay without link/i).first(),
-            ...this.stripeFramePayWithoutLinkLocators()
-        ], 'Pay without Link control', 3000).catch(() => null);
+            ...frameLocators
+        ], 'Pay without Link control', 15000).catch(() => null);
 
         if (payWithoutLink) {
+            console.log('Clicking "Pay without Link" to bypass Stripe Link challenge...');
             await payWithoutLink.click({ force: true });
+            // Wait for card form to appear after bypassing Link
             await this.page.waitForLoadState('domcontentloaded').catch(() => {});
+            await this.page.waitForTimeout(2000);
             return;
         }
 
-        const otpInputs = this.page.locator('input[inputmode="numeric"], input[autocomplete="one-time-code"]');
-        if (await otpInputs.first().isVisible().catch(() => false)) {
+        // --- Strategy 2: Fill the Stripe Link OTP (6-character security code) ---
+        // Stripe test mode accepts "000000"
+        const otpInputs = this.page.locator(
+            'input[inputmode="numeric"], input[autocomplete="one-time-code"], ' +
+            '[aria-label*="Security code character"]'
+        );
+        if (await otpInputs.first().isVisible({ timeout: 5000 }).catch(() => false)) {
+            console.log('Filling Stripe Link OTP challenge...');
             const count = await otpInputs.count();
             if (count > 1) {
-                for (let i = 0; i < Math.min(count, otp.length); i++) {
-                    await otpInputs.nth(i).fill(otp[i]);
+                // Character-by-character OTP boxes
+                const otpStr = otp.padStart(count, '0');
+                for (let i = 0; i < count; i++) {
+                    await otpInputs.nth(i).fill(otpStr[i]);
                 }
             } else {
                 await otpInputs.first().fill(otp);
             }
+            // Wait for Stripe to process OTP and show the card form
+            await this.page.waitForTimeout(3000);
             await this.page.waitForLoadState('domcontentloaded').catch(() => {});
         }
     }
@@ -210,11 +267,15 @@ export class CheckoutPage extends BasePage {
     private async firstVisibleLocator(locators: Locator[], label: string, timeout: number): Promise<Locator> {
         const deadline = Date.now() + timeout;
         let lastError: unknown;
+        // Minimum per-locator attempt window: 2000ms to avoid 1ms races
+        const perAttemptMs = 2000;
 
         while (Date.now() < deadline) {
             for (const locator of locators) {
                 try {
-                    await locator.waitFor({ state: 'visible', timeout: Math.min(750, Math.max(1, deadline - Date.now())) });
+                    const remaining = deadline - Date.now();
+                    if (remaining <= 0) break;
+                    await locator.waitFor({ state: 'visible', timeout: Math.min(perAttemptMs, remaining) });
                     return locator;
                 } catch (error) {
                     lastError = error;
@@ -223,6 +284,20 @@ export class CheckoutPage extends BasePage {
         }
 
         throw new Error(`CRITICAL: ${label} was not visible before timeout. ${String(lastError ?? '')}`);
+    }
+
+    /**
+     * Builds card number locators combining page-level and live iframe locators.
+     */
+    private async buildCardNumberLocators(): Promise<Locator[]> {
+        const inputSelector = '#cardNumber, #Field-numberInput, input[name="cardnumber"], input[autocomplete="cc-number"]';
+        const frameLocators = await this.stripeFrameInputLocatorsFromLiveFrames(inputSelector);
+        return [
+            this.page.getByRole('textbox', { name: /card number/i }).first(),
+            this.page.getByPlaceholder(/1234 1234/i).first(),
+            this.page.locator(inputSelector).first(),
+            ...frameLocators,
+        ];
     }
 
     async getEmailValue(): Promise<string> {

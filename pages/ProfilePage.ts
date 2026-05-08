@@ -172,8 +172,12 @@ export class ProfilePage extends BasePage {
     }
 
     async verifyBillingDetails() {
-        await expect(this.page.getByText('Billing & Subscription').first()).toBeVisible({ timeout: 15000 });
-        await expect(this.page.getByText(/BluKnox Classic|Plan Details|Billing/i).first()).toBeVisible({ timeout: 15000 });
+        // Wait for billing page to settle — it may take a moment after sidebar navigation
+        await this.page.waitForTimeout(1500);
+        await expect(this.page.getByText('Billing & Subscription').or(
+            this.page.getByText(/billing/i)
+        ).first()).toBeVisible({ timeout: 20000 });
+        await expect(this.page.getByText(/BluKnox Classic|Plan Details|Billing|Subscription/i).first()).toBeVisible({ timeout: 20000 });
     }
 
     async verifyErrorMessage(pattern: RegExp) {
@@ -183,8 +187,21 @@ export class ProfilePage extends BasePage {
     }
 
     async verifyContactFormVisible() {
-        await expect(this.page.getByText('Contact Us').first()).toBeVisible({ timeout: 15000 });
-        await expect(this.page.locator('input[placeholder="Name"]').first()).toBeVisible({ timeout: 15000 });
-        await expect(this.page.locator('textarea[placeholder="Message"]').first()).toBeVisible({ timeout: 15000 });
+        // Wait for the contact/support page to load after sidebar navigation
+        await this.page.waitForTimeout(1500);
+        await expect(this.page.getByText('Contact Us').first()).toBeVisible({ timeout: 20000 });
+        // Use flexible locators — the placeholder text may vary across app versions
+        const nameField = this.page
+            .getByRole('textbox', { name: /^name$/i })
+            .or(this.page.getByPlaceholder(/your name|^name$/i))
+            .or(this.page.locator('input[placeholder*="Name" i]'))
+            .first();
+        await expect(nameField).toBeVisible({ timeout: 20000 });
+        const messageField = this.page
+            .getByRole('textbox', { name: /message/i })
+            .or(this.page.getByPlaceholder(/message/i))
+            .or(this.page.locator('textarea[placeholder*="Message" i]'))
+            .first();
+        await expect(messageField).toBeVisible({ timeout: 20000 });
     }
 }

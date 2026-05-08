@@ -12,7 +12,7 @@ export class ForgotPasswordPage extends BasePage {
         this.emailInput = page.getByPlaceholder(/email/i).first();
         this.sendOtpButton = page.getByRole('button', { name: /send otp|reset/i });
         this.backToLoginLink = page.getByText(/back.*login|sign in/i).first();
-        this.otpInputs = page.locator('input[inputmode="numeric"], input[autocomplete="one-time-code"]');
+        this.otpInputs = page.locator('#updatePassword_otp, input[inputmode="numeric"], input[autocomplete="one-time-code"]');
     }
 
     async goTo() {
@@ -43,8 +43,12 @@ export class ForgotPasswordPage extends BasePage {
 
     async isOtpSectionVisible(): Promise<boolean> {
         try {
-            await this.otpInputs.first().waitFor({ state: 'visible', timeout: 15000 });
-            return true;
+            // Wait for either the success message or the OTP input
+            await Promise.race([
+                this.page.locator('.ant-message-notice').waitFor({ state: 'visible', timeout: 15000 }).catch(() => {}),
+                this.otpInputs.first().waitFor({ state: 'visible', timeout: 30000 })
+            ]);
+            return await this.otpInputs.first().isVisible();
         } catch (e) {
             return false;
         }

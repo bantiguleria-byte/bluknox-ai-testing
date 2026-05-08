@@ -46,7 +46,7 @@ test.describe('Subscription & Checkout Tests', () => {
         await subscriptionPage.proceedToCheckout();
 
         // TC-CH-001: Verify Redirection to Stripe
-        await page.waitForURL(/.*checkout.stripe.com.*/, { timeout: 60000, waitUntil: 'load' });
+        await page.waitForURL(/.*checkout.stripe.com.*/, { timeout: 60000, waitUntil: 'domcontentloaded' });
         await expect(page).toHaveURL(/.*checkout.stripe.com.*/);
 
         // TC-CH-002: Complete payment through the Stripe POM, which handles Link,
