@@ -1,0 +1,59 @@
+{
+  "module": "Login",
+  "url": "https://staging.bluknox.com/login",
+  "capturedAt": "2026-05-08",
+  "elements": {
+    "inputs": [
+      {
+        "tag": "input",
+        "type": "email",
+        "placeholder": "Email",
+        "label": "Email",
+        "id": "email or form-controlled",
+        "antdFormItem": true,
+        "playwrightLocator": "page.getByPlaceholder('Email')"
+      },
+      {
+        "tag": "input",
+        "type": "password",
+        "placeholder": "Password",
+        "label": "Password",
+        "id": "password or form-controlled",
+        "antdFormItem": true,
+        "playwrightLocator": "page.getByPlaceholder('Password')"
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "button",
+        "text": "Sign in",
+        "type": "submit",
+        "role": "button",
+        "playwrightLocator": "page.getByRole('button', { name: 'Sign in' })"
+      }
+    ],
+    "links": [
+      {
+        "text": "Forgot password?",
+        "href": "/forgot-password or similar",
+        "playwrightLocator": "page.getByText(/forgot.?password/i)"
+      }
+    ],
+    "validationMessages": {
+      "framework": "Ant Design (AntD)",
+      "trigger": "onSubmit",
+      "selector": ".ant-form-item-explain-error",
+      "messages": {
+        "emailEmpty": "Please enter Email!",
+        "passwordEmpty": "Please enter Password!",
+        "emailInvalid": "Please enter a valid email address"
+      }
+    },
+    "postLoginIndicators": [
+      ".ant-dropdown-trigger",
+      ".ant-avatar",
+      "header img (profile icon)",
+      "[aria-label='shopping-cart']"
+    ]
+  }
+}

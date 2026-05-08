@@ -1,0 +1,23 @@
+{
+  "module": "Signup",
+  "url": "https://staging.bluknox.com/signup",
+  "capturedAt": "2026-05-08",
+  "elements": {
+    "inputs": [
+      { "label": "First Name", "placeholder": "First Name", "id": "register_first_name" },
+      { "label": "Last Name", "placeholder": "Last Name", "id": "register_last_name" },
+      { "label": "Email", "placeholder": "Email", "id": "register_email" },
+      { "label": "Password", "placeholder": "Password", "type": "password" },
+      { "label": "Confirm Password", "placeholder": "Confirm Password", "id": "register_confirmPassword" }
+    ],
+    "dropdowns": [
+      { "label": "Country of Residence", "id": "register_country", "type": "antd-select" }
+    ],
+    "buttons": [
+      { "text": "Create Account", "type": "submit" }
+    ],
+    "links": [
+      { "text": "Sign in", "href": "/login" }
+    ]
+  }
+}

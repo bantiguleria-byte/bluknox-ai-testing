@@ -1,0 +1,23 @@
+{
+  "module": "OTP Verification",
+  "url": "https://staging.bluknox.com/otp-verification",
+  "capturedAt": "2026-05-08",
+  "elements": {
+    "otpInputs": [
+      { "label": "OTP Input 1" },
+      { "label": "OTP Input 2" },
+      { "label": "OTP Input 3" },
+      { "label": "OTP Input 4" },
+      { "label": "OTP Input 5" },
+      { "label": "OTP Input 6" }
+    ],
+    "buttons": [
+      { "text": "Verify OTP" },
+      { "text": "Resend OTP", "type": "link/button" }
+    ],
+    "links": [
+      { "text": "Back to Login", "href": "/login" },
+      { "text": "Contact Support" }
+    ]
+  }
+}
