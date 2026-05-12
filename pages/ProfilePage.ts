@@ -1,5 +1,5 @@
 import { Page, Locator, expect } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { BasePage } from '../framework/core/BasePage';
 
 export class ProfilePage extends BasePage {
     // Sidebar Locators

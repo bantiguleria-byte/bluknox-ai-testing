@@ -6,15 +6,15 @@
       "localStorage": [
         {
           "name": "Intellix:refresh",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc3OTEwNjc0NCwiaWF0IjoxNzc4MjQyNzQ0LCJqdGkiOiJmY2MzOGJmZjdhY2E0OTg5Yjc1NmFiMDliMmRiZjA4ZiIsInVzZXJfaWQiOjEyOX0.efoFgwUFNfKHZFjYP_PJhcxQAxkld_RYP__uQdx2jWg"
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc3OTQzMzM5OCwiaWF0IjoxNzc4NTY5Mzk4LCJqdGkiOiI1Y2YwYWZjNzhhNGQ0MDVkYjVjOTBkZTIzNDY0YTQ3YyIsInVzZXJfaWQiOjEyOX0.kEj7pwxIe5XsgOPDnb0x7BmhueGHO3JnXlsPxrHS9aE"
         },
         {
           "name": "persist:root",
-          "value": "{\"cart\":\"{\\\"items\\\":[{\\\"id\\\":988,\\\"item_type\\\":\\\"subscription\\\",\\\"display_name\\\":\\\"BluKnox Classic - Personal Plan (per user) - Introductory Price\\\",\\\"product\\\":{\\\"id\\\":84,\\\"name\\\":\\\"BluKnox Classic\\\",\\\"tag\\\":\\\"bluknox\\\",\\\"thumbnail\\\":\\\"https://d1zdeis69c183w.cloudfront.net/media/products/20260216141930_ChatGPT_Image_Feb_16_2026_07_49_07_PM.png\\\"},\\\"tier\\\":{\\\"id\\\":154,\\\"name\\\":\\\"Personal Plan (per user) - Introductory Price\\\",\\\"monthly_price\\\":\\\"7.99\\\",\\\"yearly_price\\\":\\\"71.88\\\",\\\"stripe_monthly_price_id\\\":\\\"price_1TAQDRFxHDWwK79JhbXGZUbZ\\\",\\\"stripe_yearly_price_id\\\":\\\"price_1TAQDRFxHDWwK79Js42c4pl0\\\"},\\\"addons\\\":[],\\\"quantity\\\":1,\\\"price\\\":\\\"71.88\\\",\\\"interval\\\":\\\"year\\\",\\\"line_items\\\":[{\\\"type\\\":\\\"tier\\\",\\\"id\\\":154,\\\"name\\\":\\\"Personal Plan (per user) - Introductory Price\\\",\\\"unit_price\\\":\\\"71.88\\\",\\\"quantity\\\":1}],\\\"group_id\\\":\\\"72f99d9b-adc8-492b-8ca7-ca6abde0907c\\\",\\\"created_at\\\":\\\"2026-05-08T12:13:15.404641Z\\\",\\\"updated_at\\\":\\\"2026-05-08T12:13:15.404654Z\\\"}],\\\"loading\\\":true,\\\"error\\\":null,\\\"open\\\":false,\\\"total_price\\\":\\\"71.88\\\",\\\"total_quantity\\\":1}\",\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\"}"
+          "value": "{\"cart\":\"{\\\"items\\\":[],\\\"loading\\\":true,\\\"error\\\":null,\\\"open\\\":false,\\\"total_price\\\":\\\"0.00\\\",\\\"total_quantity\\\":0}\",\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\"}"
         },
         {
           "name": "Intellix:access",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc4MjQ2MzQ0LCJpYXQiOjE3NzgyNDI3NDQsImp0aSI6IjZjYjFmZjcyMTEyMDQ1ZTdhZWJiMjk4NDFhZDYwYWJjIiwidXNlcl9pZCI6MTI5fQ.nY04dmnyWdwYlgHnYSmFj-JaiQ04LDySnwDPmtFAJ6s"
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc4NTcyOTk4LCJpYXQiOjE3Nzg1NjkzOTgsImp0aSI6ImM5YjliMGViMWM2NjRkN2Q4NDBjYzA3NzZhYTk1MDk0IiwidXNlcl9pZCI6MTI5fQ.UwXOekaLIItXh0_-yEkmHEKn3u_MzAviHwtlxz5mRcg"
         }
       ]
     }
