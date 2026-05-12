@@ -1,5 +1,5 @@
 import { Page, Locator } from '@playwright/test';
-import { BasePage } from './BasePage';
+import { BasePage } from '../framework/core/BasePage';
 
 export class LoginPage extends BasePage {
     private readonly usernameInput: Locator;

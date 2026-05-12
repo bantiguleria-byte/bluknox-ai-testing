@@ -12,9 +12,18 @@
 # Error details
 
 ```
-Error: CRITICAL: Stripe card number input was not visible before timeout. TimeoutError: locator.waitFor: Timeout 1238ms exceeded.
+Error: locator.waitFor: Error: strict mode violation: getByRole('button', { name: /pay without link/i }).or(getByText(/pay without link/i)).or(locator('input[autocomplete="one-time-code"]')).or(locator('[aria-label*="Security code character"]')) resolved to 8 elements:
+    1) <input class="" value="" type="text" tabindex="0" pattern="[0-9]*" id="one-time-code" inputmode="numeric" name="one-time-code" autocomplete="one-time-code" data-testid="sms-code-input-0" aria-label="Security code character 1"/> aka getByTestId('sms-code-input-0')
+    2) <input class="" value="" type="text" tabindex="-1" pattern="[0-9]*" inputmode="numeric" data-testid="sms-code-input-1" aria-label="Security code character 2"/> aka getByTestId('sms-code-input-1')
+    3) <input class="" value="" type="text" tabindex="-1" pattern="[0-9]*" inputmode="numeric" data-testid="sms-code-input-2" aria-label="Security code character 3"/> aka getByTestId('sms-code-input-2')
+    4) <input class="" value="" type="text" tabindex="-1" pattern="[0-9]*" inputmode="numeric" data-testid="sms-code-input-3" aria-label="Security code character 4"/> aka getByTestId('sms-code-input-3')
+    5) <input class="" value="" type="text" tabindex="-1" pattern="[0-9]*" inputmode="numeric" data-testid="sms-code-input-4" aria-label="Security code character 5"/> aka getByTestId('sms-code-input-4')
+    6) <input class="" value="" type="text" tabindex="-1" pattern="[0-9]*" inputmode="numeric" data-testid="sms-code-input-5" aria-label="Security code character 6"/> aka getByTestId('sms-code-input-5')
+    7) <button type="reset" class="LinkActionButton LinkActionButton--text LinkCancelPartialLoginButton">…</button> aka getByRole('button', { name: 'Pay without Link' })
+    8) <span class="LinkText LinkText--bodyEmphasized LinkText-color--brand">Pay without Link</span> aka getByRole('button', { name: 'Pay without Link' })
+
 Call log:
-  - waiting for locator('iframe[name^="__privateStripeFrame"], iframe[title*="Secure payment" i], iframe[src*="stripe" i]').first().contentFrame().locator('#cardNumber, #Field-numberInput, input[name="cardnumber"], input[autocomplete="cc-number"]').first() to be visible
+  - waiting for getByRole('button', { name: /pay without link/i }).or(getByText(/pay without link/i)).or(locator('input[autocomplete="one-time-code"]')).or(locator('[aria-label*="Security code character"]')) to be visible
 
 ```
 
@@ -39,11 +48,11 @@ Call log:
         - heading "Subscribe to BluKnox Classic" [level=2] [ref=e25]
         - generic [ref=e27]:
           - generic [ref=e31]:
-            - generic [ref=e32]: ₹7,061.10
+            - generic [ref=e32]: ₹7,143.29
             - generic [ref=e35]:
               - text: per
               - text: year
-          - generic [ref=e44]: ₹588.43 / month billed annually
+          - generic [ref=e44]: ₹595.27 / month billed annually
           - group "Choose a currency:" [ref=e46]:
             - generic [ref=e47]:
               - generic [ref=e49]:
@@ -56,7 +65,7 @@ Call log:
                     - img "US" [ref=e59]
                     - text: USD
               - generic [ref=e61]:
-                - text: 1 USD = 98.2347 INR
+                - text: 1 USD = 99.3779 INR
                 - button "Show tooltip" [ref=e62] [cursor=pointer]:
                   - generic [ref=e63]:
                     - text: (
@@ -76,12 +85,12 @@ Call log:
                     - img [ref=e86]
                 - generic [ref=e88]:
                   - generic [ref=e90]: Billed annually
-                  - generic [ref=e94]: ₹7,061.10 per Licenses
-              - generic [ref=e97]: ₹7,061.10
+                  - generic [ref=e94]: ₹7,143.29 per Licenses
+              - generic [ref=e97]: ₹7,143.29
         - generic [ref=e99]:
           - generic [ref=e100]:
             - generic [ref=e101]: Subtotal
-            - generic [ref=e103]: ₹7,061.10
+            - generic [ref=e103]: ₹7,143.29
           - generic [ref=e109]:
             - textbox "Add promotion code" [ref=e113] [cursor=pointer]
             - button [disabled]:
@@ -89,7 +98,7 @@ Call log:
                 - generic: Apply
           - generic [ref=e114]:
             - generic [ref=e115]: Total due today
-            - generic [ref=e117]: ₹7,061.10
+            - generic [ref=e117]: ₹7,143.29
   - generic [ref=e118]:
     - main [ref=e119]:
       - generic [ref=e124]:
@@ -140,127 +149,181 @@ Call log:
 # Test source
 
 ```ts
-  186 |             locators.push(
-  187 |                 stripeFrame.getByRole('button', { name: /pay without link/i })
-  188 |                     .or(stripeFrame.getByText(/pay without link/i))
-  189 |                     .first()
-  190 |             );
+  83  |         const postalInput = await this.getOptimizedFirstVisible([
+  84  |             this.page.locator(postalInputSelector),
+  85  |             ...(await this.stripeFrameInputLocatorsFromLiveFrames(postalInputSelector))
+  86  |         ], 'Postal', 5000).catch(() => null);
+  87  | 
+  88  |         if (postalInput) {
+  89  |             await postalInput.fill('110001');
+  90  |         }
+  91  |     }
+  92  | 
+  93  |     async setCardholderName(name: string) {
+  94  |         // Stripe hosted page usually uses billingName, but let's be deterministic
+  95  |         const nameInput = this.page.locator('#billingName, input[name="billingName"], input[autocomplete="cc-name"]')
+  96  |             .or(this.page.getByLabel(/cardholder name|name on card/i))
+  97  |             .first();
+  98  |         await expect(nameInput).toBeVisible({ timeout: 15000 });
+  99  |         await nameInput.fill(name);
+  100 |     }
+  101 | 
+  102 |     async enterOTP(otp: string) {
+  103 |         console.log("Waiting for Stripe content to load...");
+  104 |         await this.waitForSkeletonToHide();
+  105 |         await this.handleStripeLinkChallenge(otp);
+  106 |     }
+  107 | 
+  108 |     async getStripeErrorMessage(): Promise<string> {
+  109 |         const errorElement = await this.getOptimizedFirstVisible([
+  110 |             this.page.locator('#error-message, .FieldError, [role="alert"], .CheckoutInput--invalid + .FieldError'),
+  111 |             ...(await this.stripeFrameInputLocatorsFromLiveFrames('#error-message, .FieldError, [role="alert"]'))
+  112 |         ], 'Stripe validation error', 15000).catch(() => null);
+  113 |         return errorElement ? (await errorElement.textContent() || '') : '';
+  114 |     }
+  115 | 
+  116 |     private stripeFrame(selector = this.stripeFrameSelector): FrameLocator {
+  117 |         return this.page.frameLocator(selector).first();
+  118 |     }
+  119 | 
+  120 |     private async stripeFrameInputLocatorsFromLiveFrames(inputSelector: string): Promise<Locator[]> {
+  121 |         const allIframes = this.page.locator(this.stripeFrameSelector);
+  122 |         const count = await allIframes.count().catch(() => 0);
+  123 |         const locators: Locator[] = [];
+  124 |         for (let i = 0; i < count; i++) {
+  125 |             locators.push(this.page.frameLocator(this.stripeFrameSelector).nth(i).locator(inputSelector).first());
+  126 |         }
+  127 |         return locators;
+  128 |     }
+  129 | 
+  130 |     private async stripeFramePayWithoutLinkLocators(): Promise<Locator[]> {
+  131 |         const allIframes = this.page.locator(this.stripeFrameSelector);
+  132 |         const count = await allIframes.count();
+  133 |         const locators: Locator[] = [];
+  134 |         for (let i = 0; i < count; i++) {
+  135 |             const stripeFrame = this.page.frameLocator(this.stripeFrameSelector).nth(i);
+  136 |             locators.push(
+  137 |                 stripeFrame.getByRole('button', { name: /pay without link/i })
+  138 |                     .or(stripeFrame.getByText(/pay without link/i))
+  139 |                     .first()
+  140 |             );
+  141 |         }
+  142 |         return locators;
+  143 |     }
+  144 | 
+  145 |     private async fillEmptyCardDetailsIfNeeded() {
+  146 |         const inputSelector = '#cardNumber, #Field-numberInput, input[name="cardnumber"], input[autocomplete="cc-number"]';
+  147 |         const cardNumberInput = await this.getOptimizedFirstVisible([
+  148 |             this.page.getByRole('textbox', { name: /card number/i }),
+  149 |             this.page.getByPlaceholder(/1234 1234/i),
+  150 |             this.page.locator(inputSelector),
+  151 |             ...(await this.stripeFrameInputLocatorsFromLiveFrames(inputSelector))
+  152 |         ], 'Card Number', 5000).catch(() => null);
+  153 | 
+  154 |         if (!cardNumberInput) return;
+  155 | 
+  156 |         const existingValue = await cardNumberInput.inputValue().catch(() => '');
+  157 |         if (existingValue.trim()) return;
+  158 | 
+  159 |         await this.fillCardDetails('4242424242424242', '12/30', '123');
+  160 |         const nameInput = this.page.locator('#billingName, input[name="billingName"], input[autocomplete="cc-name"]')
+  161 |             .or(this.page.getByRole('textbox', { name: /cardholder name|name on card/i }))
+  162 |             .or(this.page.getByPlaceholder(/full name on card/i))
+  163 |             .first();
+  164 |         if (await nameInput.isVisible().catch(() => false)) {
+  165 |             await nameInput.fill('Banti Guleria');
+  166 |         }
+  167 |     }
+  168 | 
+  169 |     private async handleStripeLinkChallenge(otp: string) {
+  170 |         await this.waitForSkeletonToHide();
+  171 | 
+  172 |         // Wait for either the Link challenge or the card form to be visible
+  173 |         console.log("Detecting Stripe state (Link challenge vs Card form)...");
+  174 |         
+  175 |         const linkTrigger = this.page.getByRole('button', { name: /pay without link/i })
+  176 |             .or(this.page.getByText(/pay without link/i))
+  177 |             .or(this.page.locator('input[autocomplete="one-time-code"]'))
+  178 |             .or(this.page.locator('[aria-label*="Security code character"]'));
+  179 | 
+  180 |         const cardFormTrigger = this.page.locator('#cardNumber, #Field-numberInput, input[name="cardnumber"]');
+  181 | 
+  182 |         const state = await Promise.race([
+> 183 |             linkTrigger.waitFor({ state: 'visible', timeout: 15000 }).then(() => 'link'),
+      |                         ^ Error: locator.waitFor: Error: strict mode violation: getByRole('button', { name: /pay without link/i }).or(getByText(/pay without link/i)).or(locator('input[autocomplete="one-time-code"]')).or(locator('[aria-label*="Security code character"]')) resolved to 8 elements:
+  184 |             cardFormTrigger.waitFor({ state: 'visible', timeout: 15000 }).then(() => 'card'),
+  185 |             this.page.waitForTimeout(15000).then(() => 'unknown')
+  186 |         ]);
+  187 | 
+  188 |         if (state === 'card') {
+  189 |             console.log("Card form detected directly.");
+  190 |             return;
   191 |         }
-  192 |         return locators;
-  193 |     }
-  194 | 
-  195 |     private async fillEmptyCardDetailsIfNeeded() {
-  196 |         const cardNumberInput = await this.firstVisibleLocator(
-  197 |             await this.buildCardNumberLocators(), 'Stripe card number input', 5000
-  198 |         ).catch(() => null);
-  199 |         if (!cardNumberInput) {
-  200 |             return;
-  201 |         }
-  202 | 
-  203 |         const existingValue = await cardNumberInput.inputValue().catch(() => '');
-  204 |         if (existingValue.trim()) {
+  192 | 
+  193 |         // Handle "Pay without Link" if visible
+  194 |         const frameLocators = await this.stripeFramePayWithoutLinkLocators();
+  195 |         const payWithoutLink = await this.getOptimizedFirstVisible([
+  196 |             this.page.getByRole('button', { name: /pay without link/i }),
+  197 |             this.page.getByText(/pay without link/i),
+  198 |             ...frameLocators
+  199 |         ], 'Pay without Link', 5000).catch(() => null);
+  200 | 
+  201 |         if (payWithoutLink) {
+  202 |             console.log('Clicking "Pay without Link" to bypass Stripe Link challenge...');
+  203 |             await payWithoutLink.click({ force: true });
+  204 |             await this.page.waitForTimeout(2000);
   205 |             return;
   206 |         }
   207 | 
-  208 |         await this.fillCardDetails('4242424242424242', '12/30', '123');
-  209 |         const nameInput = this.page.locator('#billingName, input[name="billingName"], input[autocomplete="cc-name"]')
-  210 |             .or(this.page.getByRole('textbox', { name: /cardholder name|name on card/i }))
-  211 |             .or(this.page.getByPlaceholder(/full name on card/i))
-  212 |             .first();
-  213 |         if (await nameInput.isVisible().catch(() => false)) {
-  214 |             await nameInput.fill('Banti Guleria');
-  215 |         }
-  216 |     }
-  217 | 
-  218 |     private async handleStripeLinkChallenge(otp: string) {
-  219 |         // Wait for skeleton/loading to disappear first
-  220 |         const skeleton = this.page.locator('.Skeleton, .loading, .spinner').first();
-  221 |         if (await skeleton.isVisible().catch(() => false)) {
-  222 |             await skeleton.waitFor({ state: 'hidden', timeout: 30000 }).catch(() => {});
-  223 |         }
+  208 |         // Handle OTP if visible
+  209 |         const otpInputs = this.page.locator('input[inputmode="numeric"], input[autocomplete="one-time-code"], [aria-label*="Security code character"]');
+  210 |         if (await otpInputs.first().isVisible({ timeout: 5000 }).catch(() => false)) {
+  211 |             console.log('Filling Stripe Link OTP challenge...');
+  212 |             const count = await otpInputs.count();
+  213 |             if (count > 1) {
+  214 |                 const otpStr = otp.padStart(count, '0');
+  215 |                 for (let i = 0; i < count; i++) {
+  216 |                     await otpInputs.nth(i).fill(otpStr[i]);
+  217 |                 }
+  218 |             } else {
+  219 |                 await otpInputs.first().fill(otp);
+  220 |             }
+  221 |             await this.page.waitForTimeout(3000);
+  222 |         }
+  223 |     }
   224 | 
-  225 |         // --- Strategy 1: Click "Pay without Link" if visible (preferred — bypasses Link entirely) ---
-  226 |         // Give it up to 15s since Stripe can be slow to render the Link challenge screen.
-  227 |         const frameLocators = await this.stripeFramePayWithoutLinkLocators();
-  228 |         const payWithoutLink = await this.firstVisibleLocator([
-  229 |             this.page.getByRole('button', { name: /pay without link/i }).first(),
-  230 |             this.page.getByText(/pay without link/i).first(),
-  231 |             ...frameLocators
-  232 |         ], 'Pay without Link control', 15000).catch(() => null);
-  233 | 
-  234 |         if (payWithoutLink) {
-  235 |             console.log('Clicking "Pay without Link" to bypass Stripe Link challenge...');
-  236 |             await payWithoutLink.click({ force: true });
-  237 |             // Wait for card form to appear after bypassing Link
-  238 |             await this.page.waitForLoadState('domcontentloaded').catch(() => {});
-  239 |             await this.page.waitForTimeout(2000);
-  240 |             return;
-  241 |         }
-  242 | 
-  243 |         // --- Strategy 2: Fill the Stripe Link OTP (6-character security code) ---
-  244 |         // Stripe test mode accepts "000000"
-  245 |         const otpInputs = this.page.locator(
-  246 |             'input[inputmode="numeric"], input[autocomplete="one-time-code"], ' +
-  247 |             '[aria-label*="Security code character"]'
-  248 |         );
-  249 |         if (await otpInputs.first().isVisible({ timeout: 5000 }).catch(() => false)) {
-  250 |             console.log('Filling Stripe Link OTP challenge...');
-  251 |             const count = await otpInputs.count();
-  252 |             if (count > 1) {
-  253 |                 // Character-by-character OTP boxes
-  254 |                 const otpStr = otp.padStart(count, '0');
-  255 |                 for (let i = 0; i < count; i++) {
-  256 |                     await otpInputs.nth(i).fill(otpStr[i]);
-  257 |                 }
-  258 |             } else {
-  259 |                 await otpInputs.first().fill(otp);
-  260 |             }
-  261 |             // Wait for Stripe to process OTP and show the card form
-  262 |             await this.page.waitForTimeout(3000);
-  263 |             await this.page.waitForLoadState('domcontentloaded').catch(() => {});
-  264 |         }
-  265 |     }
-  266 | 
-  267 |     private async firstVisibleLocator(locators: Locator[], label: string, timeout: number): Promise<Locator> {
-  268 |         const deadline = Date.now() + timeout;
-  269 |         let lastError: unknown;
-  270 |         // Minimum per-locator attempt window: 2000ms to avoid 1ms races
-  271 |         const perAttemptMs = 2000;
-  272 | 
-  273 |         while (Date.now() < deadline) {
-  274 |             for (const locator of locators) {
-  275 |                 try {
-  276 |                     const remaining = deadline - Date.now();
-  277 |                     if (remaining <= 0) break;
-  278 |                     await locator.waitFor({ state: 'visible', timeout: Math.min(perAttemptMs, remaining) });
-  279 |                     return locator;
-  280 |                 } catch (error) {
-  281 |                     lastError = error;
-  282 |                 }
-  283 |             }
-  284 |         }
-  285 | 
-> 286 |         throw new Error(`CRITICAL: ${label} was not visible before timeout. ${String(lastError ?? '')}`);
-      |               ^ Error: CRITICAL: Stripe card number input was not visible before timeout. TimeoutError: locator.waitFor: Timeout 1238ms exceeded.
-  287 |     }
-  288 | 
-  289 |     /**
-  290 |      * Builds card number locators combining page-level and live iframe locators.
-  291 |      */
-  292 |     private async buildCardNumberLocators(): Promise<Locator[]> {
-  293 |         const inputSelector = '#cardNumber, #Field-numberInput, input[name="cardnumber"], input[autocomplete="cc-number"]';
-  294 |         const frameLocators = await this.stripeFrameInputLocatorsFromLiveFrames(inputSelector);
-  295 |         return [
-  296 |             this.page.getByRole('textbox', { name: /card number/i }).first(),
-  297 |             this.page.getByPlaceholder(/1234 1234/i).first(),
-  298 |             this.page.locator(inputSelector).first(),
-  299 |             ...frameLocators,
-  300 |         ];
-  301 |     }
-  302 | 
-  303 |     async getEmailValue(): Promise<string> {
-  304 |         return await this.stripeEmailInput.inputValue();
-  305 |     }
-  306 | }
-  307 | 
+  225 |     private async waitForSkeletonToHide() {
+  226 |         const skeleton = this.page.locator('.Skeleton, .loading, .spinner, [class*="skeleton" i]').first();
+  227 |         if (await skeleton.isVisible().catch(() => false)) {
+  228 |             await skeleton.waitFor({ state: 'hidden', timeout: 30000 }).catch(() => {});
+  229 |         }
+  230 |         await this.page.waitForTimeout(1000);
+  231 |     }
+  232 | 
+  233 |     private async getOptimizedFirstVisible(locators: Locator[], label: string, timeout: number): Promise<Locator> {
+  234 |         if (locators.length === 0) throw new Error(`No locators provided for ${label}`);
+  235 |         
+  236 |         // Combine all locators into one using Playwright's .or() operator
+  237 |         let combined = locators[0];
+  238 |         for (let i = 1; i < locators.length; i++) {
+  239 |             combined = combined.or(locators[i]);
+  240 |         }
+  241 | 
+  242 |         try {
+  243 |             await combined.first().waitFor({ state: 'visible', timeout });
+  244 |             // Find which one is actually visible
+  245 |             for (const loc of locators) {
+  246 |                 if (await loc.first().isVisible()) return loc.first();
+  247 |             }
+  248 |             return combined.first();
+  249 |         } catch (error) {
+  250 |             throw new Error(`CRITICAL: ${label} was not visible after ${timeout}ms. ${String(error)}`);
+  251 |         }
+  252 |     }
+  253 | 
+  254 |     async getEmailValue(): Promise<string> {
+  255 |         return await this.stripeEmailInput.inputValue();
+  256 |     }
+  257 | }
+  258 | 
 ```

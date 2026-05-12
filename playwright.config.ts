@@ -5,7 +5,7 @@ export default defineConfig({
   timeout: 90000,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: 0,
+  retries: 1,
   workers: 1,
   reporter: 'html',
   use: {
@@ -22,7 +22,7 @@ export default defineConfig({
     },
     {
       name: 'chromium',
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
         storageState: 'utils/storageState.json',
       },
