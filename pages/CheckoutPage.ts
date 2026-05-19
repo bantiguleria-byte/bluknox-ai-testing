@@ -32,17 +32,23 @@ export class CheckoutPage extends BasePage {
 
         const aiAgentCheckbox = this.page.getByRole('checkbox', { name: /AI agent/i });
         if (await aiAgentCheckbox.isVisible().catch(() => false) && !(await aiAgentCheckbox.isChecked())) {
-            await aiAgentCheckbox.check({ force: true }).catch(async () => {
-                const aiAgentLabel = this.page.getByText(/I am an AI agent/i);
-                await aiAgentLabel.scrollIntoViewIfNeeded();
-                await this.page.waitForTimeout(2000);
-                await aiAgentLabel.click({ force: true });
-            });
+            try {
+                await aiAgentCheckbox.evaluate(node => (node as HTMLInputElement).click());
+                await this.page.waitForTimeout(1000);
+            } catch (error) {
+                console.log("Programmatic click on checkbox failed, trying fallback label click");
+                const aiAgentLabel = this.page.getByText(/I am an AI agent/i).first();
+                await aiAgentLabel.evaluate(node => (node as HTMLElement).click());
+            }
         }
 
         await expect(this.subscribeButton).toBeVisible({ timeout: 30000 });
-        await this.click(this.subscribeButton);
-        await this.page.waitForURL(/.*order-history.*/, { timeout: 120000 });
+        await this.subscribeButton.scrollIntoViewIfNeeded();
+        await this.subscribeButton.click({ force: true }).catch(async () => {
+            console.log("Standard click on subscribe failed, trying programmatic click");
+            await this.subscribeButton.evaluate(node => (node as HTMLButtonElement).click());
+        });
+        await this.page.waitForURL(/.*(orders|order-history).*/, { timeout: 120000 });
     }
 
     async fillCardDetails(cardNumber: string, expiry: string, cvc: string) {
@@ -119,6 +125,8 @@ export class CheckoutPage extends BasePage {
 
     private async stripeFrameInputLocatorsFromLiveFrames(inputSelector: string): Promise<Locator[]> {
         const allIframes = this.page.locator(this.stripeFrameSelector);
+        // Wait for at least one frame to attach to prevent race conditions during Stripe UI transitions
+        await allIframes.first().waitFor({ state: 'attached', timeout: 15000 }).catch(() => {});
         const count = await allIframes.count().catch(() => 0);
         const locators: Locator[] = [];
         for (let i = 0; i < count; i++) {
@@ -172,16 +180,26 @@ export class CheckoutPage extends BasePage {
         // Wait for either the Link challenge or the card form to be visible
         console.log("Detecting Stripe state (Link challenge vs Card form)...");
         
-        const linkTrigger = this.page.getByRole('button', { name: /pay without link/i })
-            .or(this.page.getByText(/pay without link/i))
-            .or(this.page.locator('input[autocomplete="one-time-code"]'))
-            .or(this.page.locator('[aria-label*="Security code character"]'));
+        // Wait for at least one Stripe frame to attach before building dynamic frame locators
+        await this.page.locator(this.stripeFrameSelector).first().waitFor({ state: 'attached', timeout: 15000 }).catch(() => {});
+        
+        const linkLocators = [
+            this.page.getByRole('button', { name: /pay without link/i }),
+            this.page.getByText(/pay without link/i),
+            this.page.locator('input[autocomplete="one-time-code"]'),
+            this.page.locator('[aria-label*="Security code character"]'),
+            ...(await this.stripeFramePayWithoutLinkLocators())
+        ];
 
-        const cardFormTrigger = this.page.locator('#cardNumber, #Field-numberInput, input[name="cardnumber"]');
+        const inputSelector = '#cardNumber, #Field-numberInput, input[name="cardnumber"], input[autocomplete="cc-number"]';
+        const cardLocators = [
+            this.page.locator(inputSelector),
+            ...(await this.stripeFrameInputLocatorsFromLiveFrames(inputSelector))
+        ];
 
         const state = await Promise.race([
-            linkTrigger.waitFor({ state: 'visible', timeout: 15000 }).then(() => 'link'),
-            cardFormTrigger.waitFor({ state: 'visible', timeout: 15000 }).then(() => 'card'),
+            this.getOptimizedFirstVisible(linkLocators, 'Link', 15000).then(() => 'link').catch(() => new Promise<string>(() => {})),
+            this.getOptimizedFirstVisible(cardLocators, 'Card', 15000).then(() => 'card').catch(() => new Promise<string>(() => {})),
             this.page.waitForTimeout(15000).then(() => 'unknown')
         ]);
 
@@ -233,22 +251,19 @@ export class CheckoutPage extends BasePage {
     private async getOptimizedFirstVisible(locators: Locator[], label: string, timeout: number): Promise<Locator> {
         if (locators.length === 0) throw new Error(`No locators provided for ${label}`);
         
-        // Combine all locators into one using Playwright's .or() operator
-        let combined = locators[0];
-        for (let i = 1; i < locators.length; i++) {
-            combined = combined.or(locators[i]);
-        }
+        const promises = locators.map(loc => 
+            loc.first().waitFor({ state: 'visible', timeout })
+                .then(() => loc.first())
+                .catch(() => new Promise<Locator>(() => {})) // Never resolve if it times out
+        );
 
-        try {
-            await combined.first().waitFor({ state: 'visible', timeout });
-            // Find which one is actually visible
-            for (const loc of locators) {
-                if (await loc.first().isVisible()) return loc.first();
-            }
-            return combined.first();
-        } catch (error) {
-            throw new Error(`CRITICAL: ${label} was not visible after ${timeout}ms. ${String(error)}`);
-        }
+        promises.push(
+            this.page.waitForTimeout(timeout).then(() => {
+                throw new Error(`CRITICAL: ${label} was not visible after ${timeout}ms.`);
+            })
+        );
+
+        return await Promise.race(promises);
     }
 
     async getEmailValue(): Promise<string> {

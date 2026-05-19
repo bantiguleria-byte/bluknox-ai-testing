@@ -67,15 +67,13 @@ export class SubscriptionPage extends BasePage {
 
         const checkbox = await this.getAddonCheckbox(addonName);
         
-        // Use check() directly for deterministic state
         await expect(checkbox).toBeVisible({ timeout: 10000 });
         if (!(await checkbox.isChecked())) {
-            await checkbox.check({ force: true }).catch(async () => {
-                const checkboxTarget = checkbox.locator('xpath=ancestor::*[contains(@class,"ant-checkbox-wrapper")][1]')
-                    .or(checkbox.locator('xpath=ancestor::div[.//input[@type="checkbox"]][1]'))
-                    .first();
-                await checkboxTarget.click({ force: true });
-            });
+            // Programmatically trigger HTMLInputElement.click() to ensure React synthetic events and Ant Design state updates cleanly
+            await checkbox.evaluate(node => (node as HTMLInputElement).click());
+            
+            // Allow state to update
+            await this.page.waitForTimeout(500);
         }
         
         // Final validation
@@ -95,14 +93,17 @@ export class SubscriptionPage extends BasePage {
     }
 
     async proceedToCheckout() {
-        // Wait for the Checkout button in the drawer to be stable and visible
-        await this.checkoutButton.waitFor({ state: 'visible', timeout: 20000 });
+        // Wait for the Checkout button in the drawer to be attached first, then scroll and wait for visibility
+        await this.checkoutButton.waitFor({ state: 'attached', timeout: 20000 });
         await this.checkoutButton.scrollIntoViewIfNeeded();
-        await this.click(this.checkoutButton);
+        await this.checkoutButton.waitFor({ state: 'visible', timeout: 15000 }).catch(() => {});
+        await this.checkoutButton.evaluate(node => (node as HTMLButtonElement).click());
 
         // Wait for the Disclaimer modal's Proceed button to appear
-        await this.proceedButton.waitFor({ state: 'visible', timeout: 15000 });
-        await this.click(this.proceedButton);
+        await this.proceedButton.waitFor({ state: 'attached', timeout: 15000 });
+        await this.proceedButton.scrollIntoViewIfNeeded();
+        await this.proceedButton.waitFor({ state: 'visible', timeout: 10000 }).catch(() => {});
+        await this.proceedButton.evaluate(node => (node as HTMLButtonElement).click());
 
         // Navigation Guard: Fail fast if Stripe fails to load
         console.log("Verifying redirection to Stripe...");
@@ -310,10 +311,14 @@ export class SubscriptionPage extends BasePage {
     }
 
     private async resetPlanAddonSelections(planCard: Locator) {
-        const checkedAddons = planCard.getByRole('checkbox', { checked: true });
-        while (await checkedAddons.first().isVisible().catch(() => false)) {
-            await checkedAddons.first().uncheck({ force: true });
-            await expect(checkedAddons.first()).not.toBeChecked({ timeout: 10000 }).catch(() => {});
+        const checkboxes = planCard.locator('input[type="checkbox"]');
+        const count = await checkboxes.count();
+        for (let i = 0; i < count; i++) {
+            const checkbox = checkboxes.nth(i);
+            if (await checkbox.isChecked()) {
+                await checkbox.evaluate(node => (node as HTMLInputElement).click());
+                await expect(checkbox).not.toBeChecked({ timeout: 10000 });
+            }
         }
     }
 

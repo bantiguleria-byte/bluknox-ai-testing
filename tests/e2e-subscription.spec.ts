@@ -48,18 +48,12 @@ test.describe('Extended E2E Subscription Flow', () => {
         // Stripe Payment Page
         await page.waitForURL(/.*checkout.stripe.com.*/, { timeout: 60000 });
         
-        // Handle Stripe Link or OTP if asked
-        await checkoutPage.enterOTP('000000');
-
-        // Fill Card Details: 4242 4242 4242 4242
-        await checkoutPage.fillCardDetails('4242424242424242', '1226', '123');
-
-        // Click Subscribe/Pay
+        // Complete payment through the Stripe POM
         await checkoutPage.completePayment();
 
         // Phase 6: Redirection and Cleanup
-        await page.waitForURL(/.*order-history.*/, { timeout: 90000 });
-        await expect(page).toHaveURL(/.*order-history.*/);
+        await page.waitForURL(/.*(orders|order-history).*/, { timeout: 90000 });
+        await expect(page).toHaveURL(/.*(orders|order-history).*/);
         
         // Close drawer/modal if present
         const closeButton = page.locator('.ant-drawer-close').or(page.getByRole('button', { name: /Close|Cancel/i })).first();

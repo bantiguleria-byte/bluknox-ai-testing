@@ -6,3 +6,5 @@ playwright/.cache/
 utils/storageState.json
 .env
 *.log
+scratch/
+extracted/

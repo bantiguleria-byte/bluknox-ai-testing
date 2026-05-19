@@ -10,7 +10,7 @@ test('Technical Audit: Profile Module DOM and Validation', async ({ page }) => {
     console.log('Navigating to Profile...');
     await page.locator('.ant-dropdown-trigger').first().hover();
     await page.locator('.ant-dropdown-trigger').first().click();
-    await page.getByText('View Profile').click();
+    await page.getByText('View Profile').click({ force: true });
     
     await page.waitForTimeout(5000); // Allow for hydration
 

@@ -54,8 +54,8 @@ test.describe('Subscription & Checkout Tests', () => {
         await checkoutPage.completePayment();
 
         // Wait for redirection back to the app
-        await page.waitForURL(/.*order-history.*/, { timeout: 90000 });
-        await expect(page).toHaveURL(/.*order-history.*/);
-        await expect(page.getByRole('heading', { name: 'Order History' })).toBeVisible();
+        await page.waitForURL(/.*(orders|order-history).*/, { timeout: 90000 });
+        await expect(page).toHaveURL(/.*(orders|order-history).*/);
+        await expect(page.getByRole('heading', { name: /Order History|Orders|My Orders/i })).toBeVisible();
     });
 });

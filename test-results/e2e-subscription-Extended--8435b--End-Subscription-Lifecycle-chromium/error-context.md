@@ -12,318 +12,386 @@
 # Error details
 
 ```
-Error: locator.waitFor: Error: strict mode violation: getByRole('button', { name: /pay without link/i }).or(getByText(/pay without link/i)).or(locator('input[autocomplete="one-time-code"]')).or(locator('[aria-label*="Security code character"]')) resolved to 8 elements:
-    1) <input class="" value="" type="text" tabindex="0" pattern="[0-9]*" id="one-time-code" inputmode="numeric" name="one-time-code" autocomplete="one-time-code" data-testid="sms-code-input-0" aria-label="Security code character 1"/> aka getByTestId('sms-code-input-0')
-    2) <input class="" value="" type="text" tabindex="-1" pattern="[0-9]*" inputmode="numeric" data-testid="sms-code-input-1" aria-label="Security code character 2"/> aka getByTestId('sms-code-input-1')
-    3) <input class="" value="" type="text" tabindex="-1" pattern="[0-9]*" inputmode="numeric" data-testid="sms-code-input-2" aria-label="Security code character 3"/> aka getByTestId('sms-code-input-2')
-    4) <input class="" value="" type="text" tabindex="-1" pattern="[0-9]*" inputmode="numeric" data-testid="sms-code-input-3" aria-label="Security code character 4"/> aka getByTestId('sms-code-input-3')
-    5) <input class="" value="" type="text" tabindex="-1" pattern="[0-9]*" inputmode="numeric" data-testid="sms-code-input-4" aria-label="Security code character 5"/> aka getByTestId('sms-code-input-4')
-    6) <input class="" value="" type="text" tabindex="-1" pattern="[0-9]*" inputmode="numeric" data-testid="sms-code-input-5" aria-label="Security code character 6"/> aka getByTestId('sms-code-input-5')
-    7) <button type="reset" class="LinkActionButton LinkActionButton--text LinkCancelPartialLoginButton">…</button> aka getByRole('button', { name: 'Pay without Link' })
-    8) <span class="LinkText LinkText--bodyEmphasized LinkText-color--brand">Pay without Link</span> aka getByRole('button', { name: 'Pay without Link' })
+Error: expect(page).toHaveURL(expected) failed
+
+Expected pattern: /.*login.*/
+Received string:  "https://staging.bluknox.com/"
+Timeout: 5000ms
 
 Call log:
-  - waiting for getByRole('button', { name: /pay without link/i }).or(getByText(/pay without link/i)).or(locator('input[autocomplete="one-time-code"]')).or(locator('[aria-label*="Security code character"]')) to be visible
+  - Expect "toHaveURL" with timeout 5000ms
+    9 × unexpected value "https://staging.bluknox.com/"
 
 ```
 
 # Page snapshot
 
 ```yaml
-- generic [ref=e4]:
-  - generic [ref=e5]:
-    - banner [ref=e6]:
-      - generic [ref=e8]:
-        - link "Back to BluCygnus sandbox" [ref=e9] [cursor=pointer]:
-          - /url: https://staging.bluknox.com/api/cancel/
-          - generic [ref=e11]:
-            - img [ref=e12]
-            - generic [ref=e14]: Back
-            - generic [ref=e16]:
-              - img [ref=e18]
-              - heading "BluCygnus sandbox" [level=1] [ref=e20]
-        - generic [ref=e21]: Sandbox
-    - generic [ref=e22]:
-      - generic [ref=e24]:
-        - heading "Subscribe to BluKnox Classic" [level=2] [ref=e25]
-        - generic [ref=e27]:
-          - generic [ref=e31]:
-            - generic [ref=e32]: ₹7,143.29
-            - generic [ref=e35]:
-              - text: per
-              - text: year
-          - generic [ref=e44]: ₹595.27 / month billed annually
-          - group "Choose a currency:" [ref=e46]:
-            - generic [ref=e47]:
-              - generic [ref=e49]:
-                - button "IN INR" [disabled] [ref=e51] [cursor=pointer]:
-                  - generic [ref=e53]:
-                    - img "IN" [ref=e54]
-                    - text: INR
-                - button "US USD" [ref=e56] [cursor=pointer]:
-                  - generic [ref=e58]:
-                    - img "US" [ref=e59]
-                    - text: USD
-              - generic [ref=e61]:
-                - text: 1 USD = 99.3779 INR
-                - button "Show tooltip" [ref=e62] [cursor=pointer]:
-                  - generic [ref=e63]:
-                    - text: (
-                    - button "includes 4% conversion fee" [ref=e64]:
-                      - generic [ref=e66]: includes 4% conversion fee
-                    - text: )
-                - text: . Charges will vary based on exchange rates.
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "banner-image" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - img "banner-image" [ref=e8]
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - link "About Us" [ref=e11] [cursor=pointer]:
+            - /url: /about-us
+          - link "Contact Us" [ref=e12] [cursor=pointer]:
+            - /url: /contact-us
+        - generic [ref=e14]:
+          - link "Login" [ref=e15] [cursor=pointer]:
+            - /url: /login
+            - button "Login" [ref=e16]:
+              - generic [ref=e17]: Login
+          - link "Sign Up" [ref=e18] [cursor=pointer]:
+            - /url: /signup
+            - button "Sign Up" [ref=e19]:
+              - generic [ref=e20]: Sign Up
+  - generic [ref=e22]:
+    - main [ref=e23]:
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - heading "Bring the Cloud to your Laptop" [level=1] [ref=e28]:
+              - generic [ref=e29]: Bring the Cloud
+              - generic [ref=e30]: to your Laptop
+            - paragraph [ref=e31]:
+              - generic [ref=e32]: Secured
+              - generic [ref=e33]: data
+              - generic [ref=e34]: management
+              - generic [ref=e35]: "&"
+              - generic [ref=e36]: sharing
+              - generic [ref=e37]: across
+              - generic [ref=e38]: all
+              - generic [ref=e39]: devices
+          - button "View Subscription Plans View Subscription Plans" [ref=e41] [cursor=pointer]:
+            - generic [ref=e42]: View Subscription Plans
+            - generic: View Subscription Plans
+        - img "Mac display" [ref=e45]
+    - main [ref=e48]:
+      - generic [ref=e49]:
+        - generic [ref=e50]:
+          - heading "Introducing BluKnox" [level=4] [ref=e51]:
+            - generic [ref=e52]: Introducing BluKnox
+          - paragraph [ref=e53]:
+            - text: BluKnox gets its name from
+            - link "Fort Knox" [ref=e54] [cursor=pointer]:
+              - /url: https://en.wikipedia.org/wiki/United_States_Bullion_Depository
+            - text: ", which is known for the unparalleled security of its vaults."
+        - generic [ref=e55]:
+          - img "Main Banner" [ref=e57]
+          - generic [ref=e59]:
+            - paragraph [ref=e60]: Disk encryption, which now comes built-in with the latest OS versions on Windows and Mac computers, only protects data when your PC is not operational or shut down. If your laptop is stolen, your data remains safe due to disk encryption. However, when you are using your PC, the disk is unlocked and hackers can steal your data. Ransomware is one example of a cyberattack that can result in loss of critical data.
+            - paragraph [ref=e61]: Hackers also exploit unsecured networks in coffee shops, hotels, airports, hospitals, libraries, and restaurants.
+            - paragraph [ref=e62]:
+              - text: BluKnox secures the files on your PC with AES 256-bit encryption while keeping them available to view and edit with just one click. It eliminates the risk of data theft for personally identifiable information (PII) and confidential files and
+              - generic [ref=e63]: is certified by the US Government (HHS) for privacy and security.
+            - paragraph [ref=e64]: With BluKnox, you get all major data transfer / sharing and secure file features in a single product—no guessing which tool to use..........
+    - main [ref=e65]:
       - generic [ref=e67]:
-        - list [ref=e68]:
-          - listitem [ref=e69]:
-            - generic [ref=e72]:
-              - generic [ref=e76]: BluKnox Classic
-              - generic [ref=e77]:
-                - generic [ref=e80]:
-                  - generic [ref=e81]: Secure your confidential or sensitive data such as financial, healthcare, legal, research-based, personally identifiable information, etc. locally on your PC. Purchase plans are available for personal as well as business use. Share your data conveniently and securely across all your devices and exchange it securely with others as needed.
-                  - button [ref=e82] [cursor=pointer]:
-                    - img [ref=e86]
-                - generic [ref=e88]:
-                  - generic [ref=e90]: Billed annually
-                  - generic [ref=e94]: ₹7,143.29 per Licenses
-              - generic [ref=e97]: ₹7,143.29
-        - generic [ref=e99]:
-          - generic [ref=e100]:
-            - generic [ref=e101]: Subtotal
-            - generic [ref=e103]: ₹7,143.29
-          - generic [ref=e109]:
-            - textbox "Add promotion code" [ref=e113] [cursor=pointer]
-            - button [disabled]:
-              - generic:
-                - generic: Apply
-          - generic [ref=e114]:
-            - generic [ref=e115]: Total due today
-            - generic [ref=e117]: ₹7,143.29
-  - generic [ref=e118]:
-    - main [ref=e119]:
-      - generic [ref=e124]:
-        - list [ref=e126]:
-          - listitem [ref=e127]:
-            - generic [ref=e135]:
-              - link "Link" [ref=e140] [cursor=pointer]:
-                - /url: https://link.com/
-                - img [ref=e141]
-              - button "more" [ref=e153] [cursor=pointer]:
-                - img [ref=e156]
-          - listitem [ref=e161]:
-            - generic [ref=e171]:
-              - text: Confirm it’s you
-              - generic [ref=e172]:
-                - generic [ref=e173]:
-                  - text: Enter the code sent to
-                  - generic [ref=e175]: •••••• •••33
-                  - text: to use your saved information.
-                - generic [ref=e176]: You are currently testing and no code will be sent. Enter 000000 to continue.
-              - generic [ref=e179]:
-                - textbox "Security code character 1" [active] [ref=e180]
-                - textbox "Security code character 2" [ref=e181]
-                - textbox "Security code character 3" [ref=e182]
-                - textbox "Security code character 4" [ref=e183]
-                - textbox "Security code character 5" [ref=e184]
-                - textbox "Security code character 6" [ref=e185]
-              - button "Send code to email instead" [ref=e190] [cursor=pointer]:
-                - generic [ref=e193]: Send code to email instead
-              - generic [ref=e194]: Logging in as banti.guleria@idsil.com
-        - button "Pay without Link" [ref=e200] [cursor=pointer]:
-          - generic [ref=e203]: Pay without Link
-      - generic [ref=e204]:
-        - checkbox "I am an AI agent acting on behalf of someone else" [ref=e205]
-        - text: I am an AI agent acting on behalf of someone else
-    - contentinfo [ref=e207]:
-      - link "Powered by Stripe" [ref=e209] [cursor=pointer]:
-        - /url: https://stripe.com
-        - generic [ref=e210]:
-          - text: Powered by
-          - img "Stripe" [ref=e212]
-      - link "Terms" [ref=e215] [cursor=pointer]:
-        - /url: https://stripe.com/legal/end-users
-      - link "Privacy" [ref=e216] [cursor=pointer]:
-        - /url: https://stripe.com/privacy
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - heading "BluKnox has it all" [level=2] [ref=e70]
+            - generic [ref=e71]: PATENT PENDING
+          - paragraph [ref=e72]: Pay only for what you need by selecting the appropriate add-ons
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - link "Secure local file protection on your PC Certification Logo Secure local file protection on your PC Protect files stored locally on your device with powerful encryption that prevents unauthorized access. Data is AES-256 bit encrypted; BluKnox files are not visible in ‘File Explorer’ One-click editing of files Offline access to your confidential or sensitive data The ONC CERTIFIED HIT® is a registered trademark of the United States Department of Health and Human Services (HHS). BluKnox application on the PC is certified for privacy and security under HIPAA by HHS. Watch Video" [ref=e77] [cursor=pointer]:
+              - /url: /m/offline-access
+              - generic [ref=e78]:
+                - generic [ref=e79]:
+                  - generic [ref=e80]:
+                    - img "Secure local file protection on your PC" [ref=e81]
+                    - img "Certification Logo" [ref=e82]
+                  - heading "Secure local file protection on your PC" [level=3] [ref=e83]
+                  - paragraph [ref=e84]: Protect files stored locally on your device with powerful encryption that prevents unauthorized access.
+                  - list [ref=e85]:
+                    - listitem [ref=e86]: Data is AES-256 bit encrypted; BluKnox files are not visible in ‘File Explorer’
+                    - listitem [ref=e88]: One-click editing of files
+                    - listitem [ref=e90]: Offline access to your confidential or sensitive data
+                  - paragraph [ref=e92]: The ONC CERTIFIED HIT® is a registered trademark of the United States Department of Health and Human Services (HHS). BluKnox application on the PC is certified for privacy and security under HIPAA by HHS.
+                - generic [ref=e94]:
+                  - text: Watch Video
+                  - img [ref=e96]
+            - link "Sync across phone and cloud Sync across phone and cloud Keep your encrypted files synchronized across devices and cloud environments. Export encrypted files from PC to phone or cloud while preserving folder structure. Upload files from phone or cloud into BluKnox with AES 256-bit encryption. Seamlessly download and sync files between PC, phone, and cloud anytime. Learn More" [ref=e101] [cursor=pointer]:
+              - /url: /m/sync-phone-cloud
+              - generic [ref=e102]:
+                - generic [ref=e103]:
+                  - img "Sync across phone and cloud" [ref=e105]
+                  - heading "Sync across phone and cloud" [level=3] [ref=e106]
+                  - paragraph [ref=e107]: Keep your encrypted files synchronized across devices and cloud environments.
+                  - list [ref=e108]:
+                    - listitem [ref=e109]: Export encrypted files from PC to phone or cloud while preserving folder structure.
+                    - listitem [ref=e111]: Upload files from phone or cloud into BluKnox with AES 256-bit encryption.
+                    - listitem [ref=e113]: Seamlessly download and sync files between PC, phone, and cloud anytime.
+                - generic [ref=e116]:
+                  - text: Learn More
+                  - img [ref=e118]
+            - link "Easy, encrypted data sharing Easy, encrypted data sharing Securely share encrypted data via email, instant messaging (IM), or secure links—without compromising control. Share files via email, IM, or secure links End-to-end encryption ensures only intended recipients can access the data. No complex setup—recipients can decrypt with a simple, secure process. Watch Video" [ref=e123] [cursor=pointer]:
+              - /url: /m/true-end-to-end-encryption
+              - generic [ref=e124]:
+                - generic [ref=e125]:
+                  - img "Easy, encrypted data sharing" [ref=e127]
+                  - heading "Easy, encrypted data sharing" [level=3] [ref=e128]
+                  - paragraph [ref=e129]: Securely share encrypted data via email, instant messaging (IM), or secure links—without compromising control.
+                  - list [ref=e130]:
+                    - listitem [ref=e131]: Share files via email, IM, or secure links
+                    - listitem [ref=e133]: End-to-end encryption ensures only intended recipients can access the data.
+                    - listitem [ref=e135]: No complex setup—recipients can decrypt with a simple, secure process.
+                - generic [ref=e138]:
+                  - text: Watch Video
+                  - img [ref=e140]
+            - link "PHI-grade encrypted data sharing PHI-grade encrypted data sharing Designed for healthcare, financial and other regulated industries requiring high compliance standards. End-to-end PHI-grade encryption with PC-held keys and double encryption in the cloud (AES-256 + user-managed key). HIPAA-aligned security with certified PC protection True end-to-end protection—secure at source, in transit, and at destination, with full user control. Watch Video" [ref=e145] [cursor=pointer]:
+              - /url: /m/phi-grade-encryption
+              - generic [ref=e146]:
+                - generic [ref=e147]:
+                  - img "PHI-grade encrypted data sharing" [ref=e149]
+                  - heading "PHI-grade encrypted data sharing" [level=3] [ref=e150]
+                  - paragraph [ref=e151]: Designed for healthcare, financial and other regulated industries requiring high compliance standards.
+                  - list [ref=e152]:
+                    - listitem [ref=e153]: End-to-end PHI-grade encryption with PC-held keys and double encryption in the cloud (AES-256 + user-managed key).
+                    - listitem [ref=e155]: HIPAA-aligned security with certified PC protection
+                    - listitem [ref=e157]: True end-to-end protection—secure at source, in transit, and at destination, with full user control.
+                - generic [ref=e160]:
+                  - text: Watch Video
+                  - img [ref=e162]
+          - generic [ref=e165]:
+            - generic [ref=e169]:
+              - img "safety" [ref=e172]:
+                - img [ref=e173]
+              - heading "Simple Installation" [level=3] [ref=e176]
+              - paragraph [ref=e177]: No admin access required to install on Windows and Mac. Get up and running in minutes.
+            - generic [ref=e181]:
+              - img "lock" [ref=e184]:
+                - img [ref=e185]
+              - heading "Enhanced Data Security" [level=3] [ref=e187]
+              - paragraph [ref=e188]: More features directly on your PC compared to traditional secure data transfer products, which are server-based.
+            - generic [ref=e192]:
+              - img "mobile" [ref=e195]:
+                - img [ref=e196]
+              - heading "Available Everywhere" [level=3] [ref=e198]
+              - paragraph [ref=e199]: BluKnox phone app is available on the Apple Store and Google Play Store for seamless mobile productivity.
+    - main [ref=e200]:
+      - generic [ref=e202]:
+        - generic [ref=e203]:
+          - heading "Products" [level=2] [ref=e204]
+          - paragraph [ref=e205]: BluKnox offers flexible solutions designed for individuals, business professionals, and enterprise teams who demand uncompromising data security.
+        - generic [ref=e206]:
+          - link "BluKnox Classic View Details BluKnox Classic" [ref=e208] [cursor=pointer]:
+            - /url: /product/ODQ=
+            - generic [ref=e209]:
+              - generic [ref=e211]:
+                - img "BluKnox Classic" [ref=e212]
+                - generic [ref=e214]: View Details
+              - heading "BluKnox Classic" [level=3] [ref=e217]
+          - link "BluKnox Healthcare View Details BluKnox Healthcare" [ref=e219] [cursor=pointer]:
+            - /url: /product/ODU=
+            - generic [ref=e220]:
+              - generic [ref=e222]:
+                - img "BluKnox Healthcare" [ref=e223]
+                - generic [ref=e225]: View Details
+              - heading "BluKnox Healthcare" [level=3] [ref=e228]
+          - link "BluKnox Enterprise View Details BluKnox Enterprise" [ref=e230] [cursor=pointer]:
+            - /url: /product/ODY=
+            - generic [ref=e231]:
+              - generic [ref=e233]:
+                - img "BluKnox Enterprise" [ref=e234]
+                - generic [ref=e236]: View Details
+              - heading "BluKnox Enterprise" [level=3] [ref=e239]
+          - link "BluKnox API View Details BluKnox API" [ref=e241] [cursor=pointer]:
+            - /url: /product/ODc=
+            - generic [ref=e242]:
+              - generic [ref=e244]:
+                - img "BluKnox API" [ref=e245]
+                - generic [ref=e247]: View Details
+              - heading "BluKnox API" [level=3] [ref=e250]
+          - link "BluKnox GroupShare View Details BluKnox GroupShare" [ref=e252] [cursor=pointer]:
+            - /url: /product/ODg=
+            - generic [ref=e253]:
+              - generic [ref=e255]:
+                - img "BluKnox GroupShare" [ref=e256]
+                - generic [ref=e258]: View Details
+              - heading "BluKnox GroupShare" [level=3] [ref=e261]
+    - main [ref=e262]:
+      - generic [ref=e263]:
+        - generic [ref=e264]:
+          - heading "Want to Know More?" [level=2] [ref=e265]
+          - paragraph [ref=e266]: Explore deeper insights into BluKnox security, encryption standards, and everyday usability
+        - generic [ref=e267]:
+          - link "Data Management in the BluKnox System BluKnox secures your data directly on your PC while using the cloud for encrypted transport and controlled access on mobile. Your files remain under your control at all times and are never accessible to BluKnox administrators or third parties. Learn More" [ref=e268] [cursor=pointer]:
+            - /url: /m/secure-data-mgmt-more-info
+            - generic [ref=e269]:
+              - heading "Data Management in the BluKnox System" [level=3] [ref=e270]
+              - paragraph [ref=e271]: BluKnox secures your data directly on your PC while using the cloud for encrypted transport and controlled access on mobile. Your files remain under your control at all times and are never accessible to BluKnox administrators or third parties.
+            - generic [ref=e272]:
+              - text: Learn More
+              - img [ref=e274]
+          - link "PHI-Grade Encrypted Data Sharing Designed for healthcare and regulated industries, PHI-grade encryption provides true end-to-end protection with PC-held export keys, double encryption in the cloud, and comprehensive audit logging for enhanced accountability. Learn More" [ref=e277] [cursor=pointer]:
+            - /url: /m/secure-data-mgmt-more-info
+            - generic [ref=e278]:
+              - heading "PHI-Grade Encrypted Data Sharing" [level=3] [ref=e279]
+              - paragraph [ref=e280]: Designed for healthcare and regulated industries, PHI-grade encryption provides true end-to-end protection with PC-held export keys, double encryption in the cloud, and comprehensive audit logging for enhanced accountability.
+            - generic [ref=e281]:
+              - text: Learn More
+              - img [ref=e283]
+          - link "Helpful Note on Using BluKnox BluKnox is built to secure your most sensitive files — not replace your PC storage. Learn how to organize encrypted folders efficiently while maintaining optimal performance and scalability. Learn More" [ref=e286] [cursor=pointer]:
+            - /url: /m/secure-data-mgmt-more-info
+            - generic [ref=e287]:
+              - heading "Helpful Note on Using BluKnox" [level=3] [ref=e288]
+              - paragraph [ref=e289]: BluKnox is built to secure your most sensitive files — not replace your PC storage. Learn how to organize encrypted folders efficiently while maintaining optimal performance and scalability.
+            - generic [ref=e290]:
+              - text: Learn More
+              - img [ref=e292]
+          - link "BluKnox in Your Daily Life From securing files on your PC to encrypted messaging, mobile viewing, offline access, and cross-device transfers, BluKnox integrates seamlessly into your everyday workflow. Learn More" [ref=e295] [cursor=pointer]:
+            - /url: /m/secure-data-mgmt-more-info
+            - generic [ref=e296]:
+              - heading "BluKnox in Your Daily Life" [level=3] [ref=e297]
+              - paragraph [ref=e298]: From securing files on your PC to encrypted messaging, mobile viewing, offline access, and cross-device transfers, BluKnox integrates seamlessly into your everyday workflow.
+            - generic [ref=e299]:
+              - text: Learn More
+              - img [ref=e301]
+    - generic [ref=e305]:
+      - heading "Book a Demo" [level=2] [ref=e306]
+      - paragraph [ref=e307]: Experience the power of BluKnox firsthand. Get a personalized walkthrough of our secure digital vault technology.
+      - button "Request Demo Request Demo" [ref=e309] [cursor=pointer]:
+        - generic [ref=e310]: Request Demo
+        - generic: Request Demo
+  - contentinfo [ref=e311]:
+    - generic [ref=e312]:
+      - generic [ref=e313]:
+        - generic [ref=e314]:
+          - generic [ref=e315]: BluKnox
+          - paragraph [ref=e316]: Secured data management & sharing across all devices
+        - generic [ref=e317]:
+          - heading "Quick Links" [level=3] [ref=e318]
+          - list [ref=e319]:
+            - listitem [ref=e320]:
+              - link "ONC Health IT Certification CHPL Listing" [ref=e321] [cursor=pointer]:
+                - /url: https://chpl.healthit.gov/#/listing/11826
+            - listitem [ref=e322]:
+              - link "ONC Health IT Certification Mandatory Disclosures" [ref=e323] [cursor=pointer]:
+                - /url: https://intellixs.com/html_pages/healthcare/Mandatory%20Disclosures.html
+            - listitem [ref=e324]:
+              - link "Patient Data Export Format" [ref=e325] [cursor=pointer]:
+                - /url: https://intellixs.com/html_pages/healthcare/Patient%20Data%20Export%20Format.html
+        - generic [ref=e326]:
+          - heading "Products" [level=3] [ref=e327]
+          - list [ref=e328]:
+            - listitem [ref=e329]:
+              - link "BluKnox Classic" [ref=e330] [cursor=pointer]:
+                - /url: /product/ODQ=
+            - listitem [ref=e331]:
+              - link "BluKnox Healthcare" [ref=e332] [cursor=pointer]:
+                - /url: /product/ODU=
+            - listitem [ref=e333]:
+              - link "BluKnox Enterprise" [ref=e334] [cursor=pointer]:
+                - /url: /product/ODY=
+            - listitem [ref=e335]:
+              - link "BluKnox API" [ref=e336] [cursor=pointer]:
+                - /url: /product/ODc=
+            - listitem [ref=e337]:
+              - link "BluKnox GroupShare" [ref=e338] [cursor=pointer]:
+                - /url: /product/ODg=
+        - generic [ref=e339]:
+          - heading "Contact Us" [level=3] [ref=e340]
+          - generic [ref=e341]:
+            - generic [ref=e342]:
+              - generic [ref=e343]: Blucygnus, Inc.
+              - generic [ref=e344]: 800 N. State St, Ste 402
+              - generic [ref=e345]: Dover, DE 19901
+            - paragraph [ref=e346]:
+              - img "phone" [ref=e347]:
+                - img [ref=e348]
+              - text: +1 (302) 302-3454
+      - paragraph [ref=e351]:
+        - text: ©
+        - link "Blucygnus, Inc." [ref=e352] [cursor=pointer]:
+          - /url: https://blucygnus.ai
+        - text: – All Rights Reserved
 ```
 
 # Test source
 
 ```ts
-  83  |         const postalInput = await this.getOptimizedFirstVisible([
-  84  |             this.page.locator(postalInputSelector),
-  85  |             ...(await this.stripeFrameInputLocatorsFromLiveFrames(postalInputSelector))
-  86  |         ], 'Postal', 5000).catch(() => null);
-  87  | 
-  88  |         if (postalInput) {
-  89  |             await postalInput.fill('110001');
-  90  |         }
-  91  |     }
-  92  | 
-  93  |     async setCardholderName(name: string) {
-  94  |         // Stripe hosted page usually uses billingName, but let's be deterministic
-  95  |         const nameInput = this.page.locator('#billingName, input[name="billingName"], input[autocomplete="cc-name"]')
-  96  |             .or(this.page.getByLabel(/cardholder name|name on card/i))
-  97  |             .first();
-  98  |         await expect(nameInput).toBeVisible({ timeout: 15000 });
-  99  |         await nameInput.fill(name);
-  100 |     }
-  101 | 
-  102 |     async enterOTP(otp: string) {
-  103 |         console.log("Waiting for Stripe content to load...");
-  104 |         await this.waitForSkeletonToHide();
-  105 |         await this.handleStripeLinkChallenge(otp);
-  106 |     }
-  107 | 
-  108 |     async getStripeErrorMessage(): Promise<string> {
-  109 |         const errorElement = await this.getOptimizedFirstVisible([
-  110 |             this.page.locator('#error-message, .FieldError, [role="alert"], .CheckoutInput--invalid + .FieldError'),
-  111 |             ...(await this.stripeFrameInputLocatorsFromLiveFrames('#error-message, .FieldError, [role="alert"]'))
-  112 |         ], 'Stripe validation error', 15000).catch(() => null);
-  113 |         return errorElement ? (await errorElement.textContent() || '') : '';
-  114 |     }
-  115 | 
-  116 |     private stripeFrame(selector = this.stripeFrameSelector): FrameLocator {
-  117 |         return this.page.frameLocator(selector).first();
-  118 |     }
-  119 | 
-  120 |     private async stripeFrameInputLocatorsFromLiveFrames(inputSelector: string): Promise<Locator[]> {
-  121 |         const allIframes = this.page.locator(this.stripeFrameSelector);
-  122 |         const count = await allIframes.count().catch(() => 0);
-  123 |         const locators: Locator[] = [];
-  124 |         for (let i = 0; i < count; i++) {
-  125 |             locators.push(this.page.frameLocator(this.stripeFrameSelector).nth(i).locator(inputSelector).first());
-  126 |         }
-  127 |         return locators;
-  128 |     }
-  129 | 
-  130 |     private async stripeFramePayWithoutLinkLocators(): Promise<Locator[]> {
-  131 |         const allIframes = this.page.locator(this.stripeFrameSelector);
-  132 |         const count = await allIframes.count();
-  133 |         const locators: Locator[] = [];
-  134 |         for (let i = 0; i < count; i++) {
-  135 |             const stripeFrame = this.page.frameLocator(this.stripeFrameSelector).nth(i);
-  136 |             locators.push(
-  137 |                 stripeFrame.getByRole('button', { name: /pay without link/i })
-  138 |                     .or(stripeFrame.getByText(/pay without link/i))
-  139 |                     .first()
-  140 |             );
-  141 |         }
-  142 |         return locators;
-  143 |     }
-  144 | 
-  145 |     private async fillEmptyCardDetailsIfNeeded() {
-  146 |         const inputSelector = '#cardNumber, #Field-numberInput, input[name="cardnumber"], input[autocomplete="cc-number"]';
-  147 |         const cardNumberInput = await this.getOptimizedFirstVisible([
-  148 |             this.page.getByRole('textbox', { name: /card number/i }),
-  149 |             this.page.getByPlaceholder(/1234 1234/i),
-  150 |             this.page.locator(inputSelector),
-  151 |             ...(await this.stripeFrameInputLocatorsFromLiveFrames(inputSelector))
-  152 |         ], 'Card Number', 5000).catch(() => null);
-  153 | 
-  154 |         if (!cardNumberInput) return;
-  155 | 
-  156 |         const existingValue = await cardNumberInput.inputValue().catch(() => '');
-  157 |         if (existingValue.trim()) return;
-  158 | 
-  159 |         await this.fillCardDetails('4242424242424242', '12/30', '123');
-  160 |         const nameInput = this.page.locator('#billingName, input[name="billingName"], input[autocomplete="cc-name"]')
-  161 |             .or(this.page.getByRole('textbox', { name: /cardholder name|name on card/i }))
-  162 |             .or(this.page.getByPlaceholder(/full name on card/i))
-  163 |             .first();
-  164 |         if (await nameInput.isVisible().catch(() => false)) {
-  165 |             await nameInput.fill('Banti Guleria');
-  166 |         }
-  167 |     }
-  168 | 
-  169 |     private async handleStripeLinkChallenge(otp: string) {
-  170 |         await this.waitForSkeletonToHide();
-  171 | 
-  172 |         // Wait for either the Link challenge or the card form to be visible
-  173 |         console.log("Detecting Stripe state (Link challenge vs Card form)...");
-  174 |         
-  175 |         const linkTrigger = this.page.getByRole('button', { name: /pay without link/i })
-  176 |             .or(this.page.getByText(/pay without link/i))
-  177 |             .or(this.page.locator('input[autocomplete="one-time-code"]'))
-  178 |             .or(this.page.locator('[aria-label*="Security code character"]'));
-  179 | 
-  180 |         const cardFormTrigger = this.page.locator('#cardNumber, #Field-numberInput, input[name="cardnumber"]');
-  181 | 
-  182 |         const state = await Promise.race([
-> 183 |             linkTrigger.waitFor({ state: 'visible', timeout: 15000 }).then(() => 'link'),
-      |                         ^ Error: locator.waitFor: Error: strict mode violation: getByRole('button', { name: /pay without link/i }).or(getByText(/pay without link/i)).or(locator('input[autocomplete="one-time-code"]')).or(locator('[aria-label*="Security code character"]')) resolved to 8 elements:
-  184 |             cardFormTrigger.waitFor({ state: 'visible', timeout: 15000 }).then(() => 'card'),
-  185 |             this.page.waitForTimeout(15000).then(() => 'unknown')
-  186 |         ]);
-  187 | 
-  188 |         if (state === 'card') {
-  189 |             console.log("Card form detected directly.");
-  190 |             return;
-  191 |         }
-  192 | 
-  193 |         // Handle "Pay without Link" if visible
-  194 |         const frameLocators = await this.stripeFramePayWithoutLinkLocators();
-  195 |         const payWithoutLink = await this.getOptimizedFirstVisible([
-  196 |             this.page.getByRole('button', { name: /pay without link/i }),
-  197 |             this.page.getByText(/pay without link/i),
-  198 |             ...frameLocators
-  199 |         ], 'Pay without Link', 5000).catch(() => null);
-  200 | 
-  201 |         if (payWithoutLink) {
-  202 |             console.log('Clicking "Pay without Link" to bypass Stripe Link challenge...');
-  203 |             await payWithoutLink.click({ force: true });
-  204 |             await this.page.waitForTimeout(2000);
-  205 |             return;
-  206 |         }
-  207 | 
-  208 |         // Handle OTP if visible
-  209 |         const otpInputs = this.page.locator('input[inputmode="numeric"], input[autocomplete="one-time-code"], [aria-label*="Security code character"]');
-  210 |         if (await otpInputs.first().isVisible({ timeout: 5000 }).catch(() => false)) {
-  211 |             console.log('Filling Stripe Link OTP challenge...');
-  212 |             const count = await otpInputs.count();
-  213 |             if (count > 1) {
-  214 |                 const otpStr = otp.padStart(count, '0');
-  215 |                 for (let i = 0; i < count; i++) {
-  216 |                     await otpInputs.nth(i).fill(otpStr[i]);
-  217 |                 }
-  218 |             } else {
-  219 |                 await otpInputs.first().fill(otp);
-  220 |             }
-  221 |             await this.page.waitForTimeout(3000);
-  222 |         }
-  223 |     }
-  224 | 
-  225 |     private async waitForSkeletonToHide() {
-  226 |         const skeleton = this.page.locator('.Skeleton, .loading, .spinner, [class*="skeleton" i]').first();
-  227 |         if (await skeleton.isVisible().catch(() => false)) {
-  228 |             await skeleton.waitFor({ state: 'hidden', timeout: 30000 }).catch(() => {});
-  229 |         }
-  230 |         await this.page.waitForTimeout(1000);
-  231 |     }
-  232 | 
-  233 |     private async getOptimizedFirstVisible(locators: Locator[], label: string, timeout: number): Promise<Locator> {
-  234 |         if (locators.length === 0) throw new Error(`No locators provided for ${label}`);
-  235 |         
-  236 |         // Combine all locators into one using Playwright's .or() operator
-  237 |         let combined = locators[0];
-  238 |         for (let i = 1; i < locators.length; i++) {
-  239 |             combined = combined.or(locators[i]);
-  240 |         }
-  241 | 
-  242 |         try {
-  243 |             await combined.first().waitFor({ state: 'visible', timeout });
-  244 |             // Find which one is actually visible
-  245 |             for (const loc of locators) {
-  246 |                 if (await loc.first().isVisible()) return loc.first();
-  247 |             }
-  248 |             return combined.first();
-  249 |         } catch (error) {
-  250 |             throw new Error(`CRITICAL: ${label} was not visible after ${timeout}ms. ${String(error)}`);
-  251 |         }
-  252 |     }
-  253 | 
-  254 |     async getEmailValue(): Promise<string> {
-  255 |         return await this.stripeEmailInput.inputValue();
-  256 |     }
-  257 | }
-  258 | 
+  1  | import { test, expect } from '@playwright/test';
+  2  | import { LoginPage } from '../pages/LoginPage';
+  3  | import { SubscriptionPage } from '../pages/SubscriptionPage';
+  4  | import { CheckoutPage } from '../pages/CheckoutPage';
+  5  | 
+  6  | test.describe('Extended E2E Subscription Flow', () => {
+  7  |     let loginPage: LoginPage;
+  8  |     let subscriptionPage: SubscriptionPage;
+  9  |     let checkoutPage: CheckoutPage;
+  10 | 
+  11 |     test.beforeEach(async ({ page }) => {
+  12 |         // Step 1: Configure Viewport
+  13 |         await page.setViewportSize({ width: 1981, height: 558 });
+  14 |         
+  15 |         loginPage = new LoginPage(page);
+  16 |         subscriptionPage = new SubscriptionPage(page);
+  17 |         checkoutPage = new CheckoutPage(page);
+  18 |     });
+  19 | 
+  20 |     test('Full End-to-End Subscription Lifecycle', async ({ page }) => {
+  21 |         test.setTimeout(180000);
+  22 |         // Step 2 & 3: Launch and Validate Landing
+  23 |         await page.goto('https://staging.bluknox.com/');
+  24 |         await expect(page).toHaveTitle(/bluknox/i);
+  25 |         
+  26 |         // Phase 2: Login Flow
+  27 |         if (await page.locator('input[type="email"]').isVisible({ timeout: 5000 })) {
+  28 |             await loginPage.login('banti.guleria@idsil.com', 'Test@12345');
+  29 |         }
+  30 |         
+  31 |         // Assert Login Success
+  32 |         await expect(page.locator('.ant-dropdown-trigger').first()).toBeVisible({ timeout: 30000 });
+  33 | 
+  34 |         // Phase 3: Navigate to Subscription Plans
+  35 |         await subscriptionPage.goTo();
+  36 |         
+  37 |         // Phase 4: Validate Plans UI
+  38 |         await subscriptionPage.validatePlansUI();
+  39 | 
+  40 |         // Phase 5: Interaction (Checkout Flow)
+  41 |         await subscriptionPage.selectPlan('Personal Plan');
+  42 |         
+  43 |         // Wait for Order Summary drawer
+  44 |         await expect(page.getByText('Order Summary')).toBeVisible({ timeout: 15000 });
+  45 |         
+  46 |         await subscriptionPage.proceedToCheckout();
+  47 | 
+  48 |         // Stripe Payment Page
+  49 |         await page.waitForURL(/.*checkout.stripe.com.*/, { timeout: 60000 });
+  50 |         
+  51 |         // Complete payment through the Stripe POM
+  52 |         await checkoutPage.completePayment();
+  53 | 
+  54 |         // Phase 6: Redirection and Cleanup
+  55 |         await page.waitForURL(/.*(orders|order-history).*/, { timeout: 90000 });
+  56 |         await expect(page).toHaveURL(/.*(orders|order-history).*/);
+  57 |         
+  58 |         // Close drawer/modal if present
+  59 |         const closeButton = page.locator('.ant-drawer-close').or(page.getByRole('button', { name: /Close|Cancel/i })).first();
+  60 |         if (await closeButton.isVisible()) {
+  61 |             await closeButton.click();
+  62 |         }
+  63 | 
+  64 |         // Download button
+  65 |         const downloadButton = page.getByRole('button', { name: /download/i }).first();
+  66 |         if (await downloadButton.isVisible({ timeout: 15000 })) {
+  67 |             const [download] = await Promise.all([
+  68 |                 page.waitForEvent('download'),
+  69 |                 downloadButton.click(),
+  70 |             ]);
+  71 |             console.log('Downloaded file:', download.suggestedFilename());
+  72 |         }
+  73 | 
+  74 |         // Phase 6: Logout
+  75 |         await subscriptionPage.logout();
+> 76 |         await expect(page).toHaveURL(/.*login.*/);
+     |                            ^ Error: expect(page).toHaveURL(expected) failed
+  77 |     });
+  78 | });
+  79 | 
 ```
